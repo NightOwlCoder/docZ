@@ -1,12 +1,14 @@
-# Ryan, 10/02 9am
+# Ryan
 [[ryan-10-02]]
+
+
+# Michael
+[[michael-10-02]]
 
 
 # YJ
 
 
-
-# Michael
 
 
 

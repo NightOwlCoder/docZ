@@ -145,7 +145,14 @@ if (metricsDir) {
 3. Test `weblab_health_check`.
 4. Verify CloudWatch integration (account 975049930647).
 5. Confirm metrics appear in `~/.weblab-mcp/weblab-usage-metrics.json`.
-6. Await Chetan (amzn-mcp maintainer) merge/fork decision.
+6. ~~Await Chetan decision~~ **DONE: Fork confirmed**
+
+### Next Week (Oct 7-11)
+
+1. **Follow up with Chetan on Friday Oct 11** - Get baseline weblab usage data from old strategy
+2. Analyze usage patterns to understand current workflows
+3. Use data to justify WeblabMCPServer investment to stakeholders
+4. Begin fork execution planning
 
 ### Fork Path (If Chetan Rejects) – Week 2–3
 
@@ -163,9 +170,11 @@ if (metricsDir) {
 
 ### Blockers
 
-* ❌ Waiting on Chetan response (no timeline)
+* ✅ ~~Waiting on Chetan response~~ **RESOLVED: Fork confirmed, merge rejected (10/02/2025)**
+* ⏰ **URGENT: amzn-mcp deprecation by end of October 2025**
 * ⚠️ TypeScript errors unverified
 * ⚠️ Andes permissions deferred
+* ✅ ~~Metrics clarification~~ **RESOLVED: Baseline data from old strategy, available Oct 11**
 
 ---
 
@@ -173,9 +182,10 @@ if (metricsDir) {
 
 1. Do TypeScript errors in `accessible-metrics.ts` actually exist? (verify)
 2. Framework mismatch in `metrics.test.ts` (vitest vs jest)?
-3. Timeline for Chetan response? Likely decision?
-4. Does metrics completion align with Ryan’s “team priorities”?
+3. ~~Timeline for Chetan response? Likely decision?~~ **ANSWERED: Fork confirmed, no merge (10/02/2025)**
+4. Does metrics completion align with Ryan's "team priorities"?
 5. Arpit presentation (10/03) relevance to Andes natural language querying?
+6. ~~What does Chetan mean by "existing strategy method"?~~ **RESOLVED: Old weblab-strategy metrics, data on Oct 11**
 
 ---
 
@@ -215,34 +225,41 @@ if (metricsDir) {
 ## 8. Decision Matrix
 
 ```
-Current State: Waiting on Chetan
+Current State: Fork Decision CONFIRMED ✅ (10/02/2025)
 
-If Chetan Rejects Merge:
-├─ Action: Fork amzn-mcp
-├─ Timeline: 1–2 weeks
-├─ Effort: 7–12 days
+URGENT: amzn-mcp deprecation by end of October 2025
+
+Path: Fork amzn-mcp (ONLY OPTION)
+├─ Action: Create WeblabMCPServer
+├─ Timeline: 1-2 weeks setup + vending
+├─ Effort: 7-12 days
+├─ Urgency: HIGH (October deadline)
 └─ Result: Team-owned WeblabMCPServer
 
-If Chetan Approves Merge:
-├─ Action: Merge 3 tools
-├─ Timeline: 1 week
-├─ Effort: 6–8 days
-└─ Result: Tools in amzn-mcp temporarily
+Critical: NO MERGE PATH
+├─ Chetan rejected merge request
+├─ amzn-mcp actively deprecating all tools
+├─ Must fork immediately
+└─ See: docs/threads/chetan-amzn-mcp-thread.md
 
-Either Way:
-└─ Complete metrics implementation this week
+Immediate Actions:
+├─ Complete metrics implementation (this week)
+├─ Start fork execution (next week)
+└─ Follow up with Chetan on "existing strategy method"
 ```
 
 ---
 
 ## 9. Confidence Assessment
 
-| Area                     | Confidence | Gaps               |
-| ------------------------ | ---------- | ------------------ |
-| Technical implementation | 85%        | Build unverified   |
-| Fork strategy            | 95%        | Documented         |
-| Vending process          | 90%        | Official docs      |
-| Metrics approaches       | 80%        | Incomplete         |
-| Strategic context        | 70%        | Meeting notes only |
-| Team priorities          | 60%        | Not fully clear    |
-| Timeline pressure        | 50%        | Unknown            |
+| Area                     | Confidence | Gaps/Updates                    |
+| ------------------------ | ---------- | ------------------------------- |
+| Fork decision            | 100%       | **Confirmed by Chetan**         |
+| Timeline urgency         | 100%       | **October 2025 deadline**       |
+| Technical implementation | 85%        | Build unverified                |
+| Fork strategy            | 95%        | Documented                      |
+| Vending process          | 90%        | Official docs                   |
+| Metrics approaches       | 80%        | Incomplete                      |
+| Strategic context        | 90%        | **Chetan + Ryan meetings**      |
+| Team priorities          | 70%        | Clearer with MCP mandate        |
+| Baseline metrics data    | 100%       | **Oct 11 from Chetan**          |
