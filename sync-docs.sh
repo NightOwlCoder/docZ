@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Save current directory and switch to script location
+ORIGINAL_DIR=$(pwd)
+SCRIPT_DIR="/Users/sibagy/fileZ/docZ"
+cd "$SCRIPT_DIR"
+
+# Cleanup function to return to original directory
+cleanup() {
+  cd "$ORIGINAL_DIR"
+}
+trap cleanup EXIT
+
 # Add folders here
 FOLDERS=(
   "/Users/sibagy/fileZ/ai/weblab-mcp/docs/weblab-mcp"
