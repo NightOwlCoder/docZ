@@ -19,6 +19,47 @@ Low-stakes brainstorm to identify:
 
 ---
 
+## What Makes an Agent "Agentic"
+
+**AWS's Definition:**
+
+> An AI agent is a system that can perceive, reason, act, and learn to achieve goals. These systems don't just vary in performance and ability, but also their behavior towards a user. In an agentic experience, the system doesn't wait passively for input. Instead, it participates, collaborates, and acts on behalf of the user when appropriate, and it knows when not to.
+
+**Source:** AWS Cloudscape Design System, October 2, 2025
+
+### Litmus Test for Agentic Behavior
+
+Ask these 5 questions about any system claiming to be an "agent":
+
+1. **Does it act on behalf of user to help reach a goal?**
+   - ✅ Weblab: Takes complex query, orchestrates multiple tools, synthesizes answer
+   
+2. **Does it decide when and how to act, not just what?**
+   - ✅ Weblab: Chooses which tools to call, in what order, based on query
+   
+3. **Does it adapt over time based on input/context?**
+   - ✅ Weblab: Refines queries, learns from conversation context
+   
+4. **Is it designed to collaborate, not just wait for instructions?**
+   - ✅ Weblab: Proactive follow-ups, suggests related queries
+   
+5. **Are boundaries, transparency, and role well-defined?**
+   - ✅ Weblab: Clear scope (read-only initially), explains reasoning
+
+### What Weblab MCP Is NOT
+
+**AI-Enhanced Tools:** Not just autocomplete or smart filters that react to explicit triggers
+
+**Static Decision Trees with Chat UI:** Not "Press 1 for allocations, 2 for history"
+
+**LLM Without Goals:** Not just answering "What's experiment XYZ?" - it understands larger goal of experiment analysis
+
+**Opaque Automation:** Not silent action - explains reasoning and shows tool usage
+
+**Key Insight:** Weblab MCP passes the agentic litmus test. It's a true agent, not a chatbot with fancy tools.
+
+---
+
 ## Pain Points Today
 
 ### Manual SQL Query Hell

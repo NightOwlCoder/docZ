@@ -702,9 +702,12 @@ async def analyze_experiment(experiment_id: str) -> dict:
    - Timeline: October 2025
 
 2. **CloudAuth MCP SDK**
-   - Status: Available
-   - Need: Documentation and examples
-   - Link: https://w.amazon.com/bin/view/Dev.CDO/UnifiedAuth/CloudAuth/Onboarding/MCP/NodeJS/
+   - Status: Python SDK released October 2025
+   - Package: Python-CloudAuth-MCP-Support
+   - Seamless Strands integration confirmed
+   - Code examples: CloudAuthPythonMcpTestService, CloudAuthPythonMcpTestAgent
+   - Link: https://w.amazon.com/bin/view/Dev.CDO/UnifiedAuth/CloudAuth/Onboarding/MCP/Python/
+   - Impact: Major blocker removed, can proceed with implementation
 
 3. **MCP Registry**
    - Status: Operational
@@ -781,7 +784,7 @@ async def analyze_experiment(experiment_id: str) -> dict:
 4. Do we need security review before starting development? **ANSWERED: Staged, can start dev first (Michael meeting)**
 
 ### Important (Need Answers This Month)
-5. CloudAuth MCP SDK - is there Python version?
+5. CloudAuth MCP SDK Python version - Python-CloudAuth-MCP-Support package available
 6. Transitive Auth implementation - any examples?
 7. MCP Registry registration - what's the process?
 8. Hosting costs - Lambda vs Fargate comparison?

@@ -1,0 +1,55 @@
+{
+    "mcpServers": {
+        "brave-search": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-brave-search"
+            ],
+            "env": {
+                "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+            }
+        },
+        "fetch": {
+            "command": "uvx",
+            "args": [
+                "mcp-server-fetch"
+            ]
+        },
+        "amzn-mcp-local": {
+            "command": "npm",
+            "args": [
+                "--silent",
+                "--prefix",
+                "/Users/sibagy/fileZ/ai/weblab-mcp/amazon-internal-mcp-server/src/AmazonInternalMCPServer/",
+                "start"
+            ],
+            "env": {
+                "WEBLAB_API_KEY": "harmony-SIM-Weblab-38861",
+                "QUIP_API_TOKEN": "${QUIP_API_TOKEN}",
+                "USER": "sibagy",
+                "HOME": "/Users/sibagy",
+                "AGENT_SCRIPT_PATH": "/Users/sibagy/fileZ/ai/q/src/AmazonBuilderGenAIPowerUsersQContext/scripts"
+            },
+            "autoApprove": [
+                "weblab_details",
+                "weblab_search",
+                "weblab_allocations",
+                "weblab_activation_history",
+                "weblab_treatment_assignment"
+            ]
+        },
+        "builder-mcp": {
+            "command": "builder-mcp",
+            "args": [
+                "--exclude-tools=ApolloReadActions,SearchAcronymCentral,BarristerEvaluationWorkflow,GetDogmaClassification,GetDogmaRecommendations,GetSasCampaigns,GetSasRisks,MechanicDescribeTool,MechanicDiscoverTools,MechanicRunTool,MechanicSetUserInput,OncallReadActions,TaskeiCreateTask,TaskeiGetRooms,TaskeiGetTask,TaskeiListTasks,TaskeiUpdateTask,CheckFilepathForCAZ"
+            ]
+        },
+        "code_cerebro_mcp": {
+            "command": "~/fileZ/ai/amzn-code-cerebro-mcp",
+            "args": [
+                "--stdio"
+            ]
+        }
+    }
+}

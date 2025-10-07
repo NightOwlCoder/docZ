@@ -1,163 +1,168 @@
-# Weblab MCP Integration
+# Weblab MCP Integration - Documentation Index
 
-This repository contains the specification and design documents for integrating weblab functionality into Amazon's `amzn-mcp` package through the Model Context Protocol (MCP).
+**Project:** Weblab MCP Integration  
+**Status:** Phase 2 - Remote Strands Agent Implementation  
+**Updated:** October 7, 2025
 
-## What We're Building
+---
 
-We're adding weblab data access capabilities to AI agents and tools through 4 core MCP tools that enable:
+## Start Here
 
-- **Experiment Search**: Find weblabs by creator, status, resolver group, etc.
-- **Experiment Details**: Get comprehensive experiment information including treatments, CTI, and ownership
-- **Allocation Monitoring**: Check current experiment status and treatment allocations
-- **Change History**: Access experiment activation history with MCM information
+**For Stakeholders (Leadership/Management):**
+- **[Technical Roadmap](phase-2/mcp-weblab-anywhere-roadmap.md)** - Complete project plan, timeline, architecture
 
-## Why This Matters
+**For 3YAP Contributors:**
+- **[Use Cases & Strategy](phase-2/mcp-weblab-anywhere-use-cases-strategy.md)** - Will's primitive (you support)
+- **[Technical Vision](phase-2/mcp-weblab-anywhere-technical-vision.md)** - Sergio's primitive (Doug/YJ/Arpit support)
 
-Internal teams are increasingly using AI tools (Q CLI, Cline, etc.) for weblab analysis and need programmatic access to experiment data. This integration provides:
+**For Engineers (Implementation):**
+- **[Phase 2 Dev Setup](phase-2/phase-2-dev-setup.md)** - Local development guide
+- **[Phase 2 Strands Patterns](phase-2/strands-implementation-research/)** - Doug's reference implementations
 
-- ✅ **Service Protection**: Uses public weblab APIs with proper rate limiting
-- ✅ **Scalable Authentication**: Hybrid approach supporting individual and shared API keys
-- ✅ **AI-Friendly**: Native MCP integration for seamless AI agent workflows
-- ✅ **Future-Ready**: Extensible architecture for advanced orchestration and multi-agent systems
+---
 
-## Repository Structure
+## Key Decisions & Context
+
+**Recent Updates (October 2025):**
+- [MCP Everywhere Mandate](phase-2/mcp-everywhere-mandate.md) - Remote-first architecture requirement
+- [Chetan Thread](../threads/chetan-amzn-mcp-thread.md) - Fork decision (merge rejected)
+- [Project Restart Package](phase-2/restart-package-2025-10-02.md) - Project snapshot (for context resumption)
+
+**Meeting Notes:**
+- [Ryan (Oct 2)](weblab-mcp-meetings/ryan-10-02.md) - MCP strategy, use cases
+- [Michael (Oct 2)](weblab-mcp-meetings/michael-10-02.md) - Infrastructure, security
+- [YJ (Oct 2)](weblab-mcp-meetings/yj-10-02.md) - Data access (Redshift vs Athena)
+- [Jakub (Oct 6)](weblab-mcp-meetings/jakub-10-06.md) - Strands development setup
+
+---
+
+## Project Status
+
+**Phase 1 Complete:**
+- 3 core MCP tools built and tested (details, allocations, history)
+- Tested with Vignesh (director demo)
+- 2179 tests passing
+
+**Phase 2 Current:**
+- Remote Strands agent architecture
+- CloudAuth Python MCP SDK available (Oct 2025)
+- Q1 2026 CCI deadline (P0)
+- 6-week implementation timeline
+
+**Archived:**
+- 3 untested tools ([see archive](../../weblab-mcp-source-code/archive/))
+- Local fork strategy ([see archive](../archive/))
+
+---
+
+## Document Organization
+
+### Active Documents (Phase 2)
+
+**Strategy & Planning:**
+- phase-2/mcp-weblab-anywhere-roadmap.md
+- phase-2/mcp-weblab-anywhere-use-cases-strategy.md
+- phase-2/mcp-weblab-anywhere-technical-vision.md
+
+**Implementation & Reference:**
+- phase-2/phase-2-dev-setup.md
+- phase-2/strands-implementation-research/ (Doug's patterns)
+- phase-2/authentication-clarification.md
+- phase-2/toolbox-vending-guide.md
+
+**Decision History:**
+- phase-2/mcp-everywhere-mandate.md
+- phase-2/restart-package-2025-10-02.md
+- ../threads/chetan-amzn-mcp-thread.md
+
+**Meetings:**
+- weblab-mcp-meetings/
+
+### Reference Documents (Background)
+
+**Testing:**
+- ../testing/
+
+**Historical (Investigation & Research):**
+- historical/ - Andes integration, LangChain investigation, Strands research
+- planning/ - Long-term vision, design plans
+
+**Phase 1 (Complete - September 2025):**
+- phase-1/ - All Phase 1 documentation
+  - phase-1-readme.md (complete guide)
+  - Local MCP setup, testing, code reviews
+
+**Presentations & Demos:**
+- presentations/ - Demo scripts, presentations, announcements
+
+### Archived Documents (Outdated)
+
+**Moved to docs/archive/:**
+- standalone-server-analysis.md (fork analysis - obsolete)
+
+**Can be archived (Phase 1 specific):**
+- Many investigation docs (learnings captured in current docs)
+- Multiple overlapping guides
+- Old meeting notes from before October
+
+---
+
+## Quick Navigation
+
+**I need to:**
+- **Understand the project** → Read [Roadmap](phase-2/mcp-weblab-anywhere-roadmap.md)
+- **Contribute to 3YAP** → Read [Use Cases](phase-2/mcp-weblab-anywhere-use-cases-strategy.md) or [Technical Vision](phase-2/mcp-weblab-anywhere-technical-vision.md)
+- **Start development** → Read [Phase 2 Dev Setup](phase-2/phase-2-dev-setup.md)
+- **Understand decisions** → Read [MCP Mandate](phase-2/mcp-everywhere-mandate.md) and [Chetan Thread](../threads/chetan-amzn-mcp-thread.md)
+- **See meeting outcomes** → Check [weblab-mcp-meetings/](weblab-mcp-meetings/)
+- **Phase 1 reference** → Check [phase-1/](phase-1/)
+
+---
+
+## Document Maintenance
+
+**Organized Structure:**
+- **phase-2/** - All active Phase 2 work (roadmap, vision, dev setup, references)
+- **phase-1/** - Complete Phase 1 documentation (historical reference)
+- **historical/** - Investigation and research docs
+- **presentations/** - Demo materials and announcements
+- **planning/** - Long-term vision and planning docs
+- **weblab-mcp-meetings/** - Meeting notes
+
+---
+
+**Need Help?** Check [Roadmap](phase-2/mcp-weblab-anywhere-roadmap.md) first, then reach out to Sergio Ibagy
+
+---
+
+## Final Folder Structure
 
 ```
-├── .kiro/specs/weblab-mcp-integration/
-│   ├── requirements.md    # User stories and acceptance criteria
-│   ├── design.md         # Technical architecture and design decisions
-│   └── tasks.md          # Implementation plan and task breakdown
-├── docs/                 # Supporting documentation
-└── README.md            # This file
+docs/weblab-mcp/
+├── README.md                    # This file (navigation)
+├── phase-2/                     # Active Phase 2 work
+│   ├── mcp-weblab-anywhere-*.md (3 files: roadmap, use cases, tech vision)
+│   ├── phase-2-dev-setup.md
+│   ├── strands-implementation-research/
+│   └── Supporting docs (auth, vending, mandate)
+├── phase-1/                     # Phase 1 complete (historical)
+│   └── All Phase 1 docs
+├── historical/                  # Investigations & research
+│   └── LangChain, Strands, Andes investigations
+├── planning/                    # Vision & planning
+│   └── Long-term plans, design docs
+├── presentations/               # Demo materials
+│   └── Scripts, slides, announcements
+└── weblab-mcp-meetings/         # Meeting notes
+    └── Organized by date/person
 ```
 
-## Getting Started
 
-1. **Review the Spec**: Start with `requirements.md` to understand the user needs
-2. **Understand the Design**: Read `design.md` for technical architecture details
-3. **Implementation**: Follow `tasks.md` for step-by-step implementation guidance
-4. **Testing**: Use `docs/testing/weblab-test-runner.js` to validate tools work with Amazon Q
+-   Docling RAG Agent and examples:
+https://github.com/coleam00/ottomator-agents/tree/main/docling-rag-agent
 
-## Configuration
+-   Docling GitHub repository:
+https://github.com/docling-project/docling
 
-### BYOK (Bring Your Own Key) Support
-
-The Weblab MCP integration supports both shared community keys and team-specific API keys:
-
-#### Default Shared Key
-- **Key**: `WeblabMCPServer-Weblab-58093`
-- **Rate Limit**: Heavily throttled for casual users
-- **Use Case**: Testing and low-volume queries
-
-#### Team-Specific Keys (BYOK)
-Teams can configure their own Weblab API key for higher rate limits:
-
-1. **Obtain a Weblab API Key**: Contact the Weblab team to create a new SSO consumer with appropriate permissions
-2. **Configure in MCP**: Add to your `mcp.json` configuration:
-   ```json
-   {
-     "env": {
-       "WEBLAB_API_KEY": "YourTeam-Weblab-12345",
-       "WEBLAB_ENVIRONMENT": "PROD"
-     }
-   }
-   ```
-
-#### Origin Pattern
-The integration automatically derives the Origin header from your API key:
-- **Pattern**: First segment before hyphen becomes the origin
-- **Examples**:
-  - `WeblabMCPServer-Weblab-58093` → Origin: `WeblabMCPServer`
-  - `AmazonFresh-Weblab-77234` → Origin: `AmazonFresh`
-  - `RufusAI-Weblab-99102` → Origin: `RufusAI`
-
-**Important**: When requesting a new API key, ensure the configured origins match the first segment of your key name.
-
-### Debug Logging
-
-Enable detailed API request/response logging for troubleshooting:
-
-```bash
-# Enable debug logging
-export WEBLAB_DEBUG=true
-```
-
-Debug output includes:
-- API endpoints being called
-- Partial API key (masked for security)
-- Origin headers
-- Response status codes
-- Response lengths
-
-**Note**: Debug logs are written to `stderr` to avoid interfering with MCP communication.
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `WEBLAB_API_KEY` | Your team's Weblab API key | `WeblabMCPServer-Weblab-58093` |
-| `WEBLAB_ENVIRONMENT` | Target environment (`BETA` or `PROD`) | `BETA` |
-| `WEBLAB_DEBUG` | Enable debug logging (`true` or `false`) | `false` |
-
-## Testing
-
-### Quick Validation
-```bash
-# Test both BETA and PROD environments
-node docs/testing/weblab-test-runner.js
-
-# Test specific environment only
-WEBLAB_ENVIRONMENT=PROD node docs/testing/weblab-test-runner.js
-WEBLAB_ENVIRONMENT=BETA node docs/testing/weblab-test-runner.js
-```
-
-### Environment Support
-- **BETA Environment**: Default, uses BETA experiments for testing
-- **PROD Environment**: ✅ **NOW SUPPORTED** (CR-220258045)
-  - Full activation history support (`allocationperiods` enabled)
-  - Use `WEBLAB_ENVIRONMENT=PROD` to test production experiments
-  - Environment variable overrides MCP configuration
-
-### Developer Workflow
-1. **Make MCP tool changes**
-2. **Run test bench** - validates Q can discover and use tools correctly
-3. **If tests fail** - tweak tool descriptions or test prompts
-4. **Repeat until all pass**
-
-### Adding New Tools
-1. **Add tool to MCP server**
-2. **Add test case to `docs/testing/weblab-test-suite.json`**:
-   ```json
-   {
-     "name": "My new tool test",
-     "prompt": "Natural language that should trigger my tool",
-     "expectedTools": ["my_new_tool"]
-   }
-   ```
-3. **Run test bench to validate**
-
-### Manual Testing
-```bash
-# Test individual prompts
-q "What can you tell me about experiment X?"
-# Check which tools Q actually uses vs expected
-```
-
-## Key Design Decisions
-
-- **Public API Only**: Uses WeblabAPIModel public APIs to ensure service availability
-- **Rate Limiting**: TK query/minute for shared keys, higher limits for individual keys
-- **Authentication**: Hybrid approach with individual API keys and shared community fallback
-- **MCP Integration**: Follows established `amzn-mcp` patterns and conventions
-
-## TK Values
-
-Throughout the documents, you'll see "TK" placeholders for numeric values that need team discussion and decision. These include rate limits, timeouts, and other operational parameters.
-
-## Contributing
-
-This is currently in the specification phase. Implementation will begin once the design is finalized and TK values are determined.
-
-## Questions?
-
-For questions about this integration, reach out to the weblab MCP integration team or check the design document for technical details.
+-   Docling documentation:
+https://docling-project.github.io/docling/

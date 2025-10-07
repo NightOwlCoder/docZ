@@ -192,6 +192,42 @@ Weblab MCP Tools (TypeScript)
 
 ## New Architecture (Remote Strands Agent)
 
+### Agentic Behavior Requirements
+
+**AWS's Definition of AI Agents:**
+
+> An AI agent is a system that can perceive, reason, act, and learn to achieve goals. These systems don't just vary in performance and ability, but also their behavior towards a user. In an agentic experience, the system doesn't wait passively for input. Instead, it participates, collaborates, and acts on behalf of the user when appropriate, and it knows when not to.
+
+**Source:** AWS Cloudscape Design System, October 2, 2025
+
+**Strands Agent Architecture Enables True Agentic Behavior:**
+
+- **Perceive:** Understands user goals from natural language queries
+- **Reason:** LLM decides which tools to use, in what order, based on context
+- **Act:** Executes multi-step workflows autonomously (orchestration)
+- **Learn:** Adapts based on conversation context, feedback, session history
+
+**Example Agentic Flow:**
+```
+User: "Find Dave's weblabs with positive CP impact"
+
+Agent Perceives: Complex analytical question needing multiple data sources
+Agent Reasons: Need to (1) find Dave's weblabs, (2) check results, (3) filter CP
+Agent Acts: Orchestrates tools autonomously
+  1. Query Andes for experiments where owner='Dave'
+  2. For each, call weblab_details to get metadata
+  3. Query Andes for CP metrics per experiment
+  4. Filter and synthesize results
+Agent Learns: Remembers Dave's experiments for follow-up queries
+
+Result: Natural language answer with synthesized insights
+```
+
+**This distinguishes our approach from:**
+- ❌ Chat UI with decision tree (not reasoning)
+- ❌ LLM without goals (no orchestration)
+- ❌ Opaque automation (no transparency)
+
 ### Why Strands Agent
 
 **Key insight from investigation:**
@@ -405,12 +441,74 @@ orchestrator = Agent(
 **Current:** User Midway tokens work for individuals  
 **Problem:** Remote agents need service identity + user delegation  
 **Solution:** CloudAuth + Transitive Auth  
-**Unknown:** Python CloudAuth MCP SDK availability? Examples?
+**Status:** Python CloudAuth MCP SDK released October 2025
 
-**Questions for MCP Everywhere team:**
-- Is CloudAuth MCP SDK Python-compatible?
-- TA token passing patterns for Strands agents?
+**Breaking News (Doug, Oct 7):**
+> "CloudAuth Python MCP SDK dropped this week: https://w.amazon.com/bin/view/Dev.CDO/UnifiedAuth/CloudAuth/Onboarding/MCP/Python
+> 
+> This gives us a way to authenticate agents, for example running lambdas on backend like WLBR.ai, securely via direct MCP to call tools. Seamless integration with Strands."
+
+**What This Gives Us:**
+- CloudAuthFastMCP for Python MCP servers
+- cloudauth_streamablehttp_client for Strands agents  
+- Native boto3 Session integration
+- Automatic auth challenge-response handling
+- Example code and test packages available
+
+**Implementation Pattern:**
+```python
+# Server side (our WeblabStrandsAgent as MCP server)
+from cloudauth_mcp_support.server import CloudAuthFastMCP
+from cloud_auth_requests_python import AWSCloudAuthCredential
+from boto3 import Session
+
+mcp = CloudAuthFastMCP(
+    name="WeblabMCPServer",
+    aws_auth=AWSCloudAuthCredential(
+        Session(),
+        "arn:aws:iam::ACCOUNT:role/WeblabMCPRole",
+        "us-east-1"
+    ),
+    host="0.0.0.0",
+    port="3000",
+    stateless_http=True
+)
+
+@mcp.tool(name="analyze_weblab")
+def analyze_weblab(experiment_id: str) -> dict:
+    return weblab_agent(f"Analyze {experiment_id}")
+
+mcp.run(transport="streamable-http", mount_path="/mcp")
+```
+
+**Client side (Strands agent using other MCP servers):**
+```python
+from strands.tools.mcp.mcp_client import MCPClient
+from cloudauth_mcp_support.client import cloudauth_streamablehttp_client
+from cloud_auth_requests_python import AWSCloudAuthCredential
+
+session = boto3.Session()
+aws_creds = AWSCloudAuthCredential(session, None, "us-east-1")
+
+# Connect to remote MCP server with CloudAuth
+andes_mcp = MCPClient(lambda: cloudauth_streamablehttp_client(
+    "https://andes-mcp.internal/mcp",
+    aws_creds
+))
+
+with andes_mcp:
+    tools = andes_mcp.list_tools_sync()
+    agent = Agent(tools=tools, model=BedrockModel())
+```
+
+**Package:** Python-CloudAuth-MCP-Support  
+**Examples:** CloudAuthPythonMcpTestService, CloudAuthPythonMcpTestAgent  
+**Requires:** Python 3.10+ (not 3.9)
+
+**Remaining questions:**
+- Transitive Auth patterns for user delegation?
 - Security certification requirements?
+- ServiceLens operation registration process?
 
 ### Challenge 2: Cost Management
 
@@ -798,9 +896,7 @@ StrandsTelemetry() \
 
 ### Critical (Need Answers to Proceed)
 
-1. **CloudAuth MCP SDK - Python version exists?**
-   - Link shows Node.js, need Python equivalent
-   - Or implement manually?
+1. CloudAuth MCP SDK Python version - Python-CloudAuth-MCP-Support package available (released Oct 2025)
 
 2. **Transitive Auth implementation patterns?**
    - How to receive TA token in Lambda?

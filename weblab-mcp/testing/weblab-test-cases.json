@@ -1,0 +1,253 @@
+{
+  "testSuite": {
+    "name": "Weblab MCP Test Suite",
+    "description": "Test suite for weblab MCP integration with Amazon Q",
+    "version": "1.0",
+    "expectedScoreCalibration": {
+      "excellent": "90-100",
+      "good": "75-89",
+      "adequate": "60-74",
+      "poor": "40-59",
+      "failing": "0-39"
+    }
+  },
+  "testCategories": [
+    {
+      "category": "basic-functionality",
+      "description": "Core weblab MCP tool functionality tests",
+      "tests": [
+        {
+          "id": "single-tool-details",
+          "name": "Single Tool - Weblab Details",
+          "prompt": "Use the weblab_details tool to get information about experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' in BETA environment. Provide a summary of the key experiment information.",
+          "expectedTools": [
+            "weblab_details"
+          ],
+          "expectedScore": "70-85",
+          "rationale": "Simple tool usage, basic analysis"
+        },
+        {
+          "id": "single-tool-allocations",
+          "name": "Single Tool - Weblab Allocations",
+          "prompt": "Use the weblab_allocations tool to check current allocation percentages for experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' in BETA environment. Explain what the allocation data means.",
+          "expectedTools": [
+            "weblab_allocations"
+          ],
+          "expectedScore": "70-85",
+          "rationale": "Single tool with data interpretation"
+        },
+        {
+          "id": "single-tool-history",
+          "name": "Single Tool - Activation History",
+          "prompt": "Use the weblab_activation_history tool to review the change history for experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' in BETA environment. What does the history tell us?",
+          "expectedTools": [
+            "weblab_activation_history"
+          ],
+          "expectedScore": "70-85",
+          "rationale": "Single tool with historical analysis"
+        }
+      ]
+    },
+    {
+      "category": "multi-tool-orchestration",
+      "description": "Tests requiring coordination of multiple weblab tools",
+      "tests": [
+        {
+          "id": "two-tool-combo",
+          "name": "Two Tool Combination - Details + Allocations",
+          "prompt": "Analyze experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' in BETA environment. Get the experiment details and current allocations, then explain how they relate to each other.",
+          "expectedTools": [
+            "weblab_details",
+            "weblab_allocations"
+          ],
+          "expectedScore": "75-90",
+          "rationale": "Multi-tool coordination with synthesis"
+        },
+        {
+          "id": "three-tool-analysis",
+          "name": "Three Tool Analysis - Details + Allocations + History",
+          "prompt": "Provide a comprehensive analysis of experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' in BETA environment using experiment details, current allocations, and activation history. What story do these three data sources tell together?",
+          "expectedTools": [
+            "weblab_details",
+            "weblab_allocations",
+            "weblab_activation_history"
+          ],
+          "expectedScore": "80-95",
+          "rationale": "Complex multi-tool orchestration with narrative synthesis"
+        },
+        {
+          "id": "all-tools-comprehensive",
+          "name": "All Tools - Complete Analysis",
+          "prompt": "I need the most comprehensive analysis possible of weblab experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' in BETA environment. Use ALL available weblab tools and provide actionable insights and recommendations.",
+          "expectedTools": [
+            "weblab_details",
+            "weblab_allocations",
+            "weblab_activation_history",
+            "weblab_search"
+          ],
+          "expectedScore": "75-90",
+          "rationale": "Maximum tool usage with professional recommendations (our baseline test)"
+        }
+      ]
+    },
+    {
+      "category": "natural-language-discovery",
+      "description": "Tests where Q must discover which tools to use from natural language",
+      "tests": [
+        {
+          "id": "implicit-details-request",
+          "name": "Implicit Details Request",
+          "prompt": "What can you tell me about the weblab experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516'?",
+          "expectedTools": [
+            "weblab_details"
+          ],
+          "expectedScore": "65-80",
+          "rationale": "Natural language tool discovery"
+        },
+        {
+          "id": "implicit-allocation-request",
+          "name": "Implicit Allocation Request",
+          "prompt": "How is traffic currently split for experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' in BETA?",
+          "expectedTools": [
+            "weblab_allocations"
+          ],
+          "expectedScore": "65-80",
+          "rationale": "Natural language implies allocation data needed"
+        },
+        {
+          "id": "troubleshooting-request",
+          "name": "Troubleshooting Request",
+          "prompt": "I'm having issues with weblab experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516'. Can you help me figure out what might be wrong?",
+          "expectedTools": [
+            "weblab_details",
+            "weblab_allocations"
+          ],
+          "expectedScore": "70-85",
+          "rationale": "Problem-solving requires multiple data sources"
+        },
+        {
+          "id": "optimization-request",
+          "name": "Optimization Request",
+          "prompt": "How can I optimize the performance of weblab experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516'?",
+          "expectedTools": [
+            "weblab_details",
+            "weblab_allocations",
+            "weblab_activation_history"
+          ],
+          "expectedScore": "75-90",
+          "rationale": "Optimization requires comprehensive understanding"
+        }
+      ]
+    },
+    {
+      "category": "error-handling",
+      "description": "Tests for graceful error handling and edge cases",
+      "tests": [
+        {
+          "id": "nonexistent-experiment",
+          "name": "Non-existent Experiment",
+          "prompt": "Please analyze weblab experiment 'FAKE_EXPERIMENT_DOES_NOT_EXIST_999' and tell me about its configuration.",
+          "expectedTools": [
+            "weblab_details"
+          ],
+          "expectedScore": "60-80",
+          "rationale": "Good error handling with helpful guidance"
+        },
+        {
+          "id": "malformed-experiment-id",
+          "name": "Malformed Experiment ID",
+          "prompt": "What can you tell me about weblab experiment 'invalid-id-format'?",
+          "expectedTools": [
+            "weblab_details"
+          ],
+          "expectedScore": "60-80",
+          "rationale": "Error recognition with user guidance"
+        },
+        {
+          "id": "empty-experiment-id",
+          "name": "Empty Experiment ID",
+          "prompt": "Please analyze weblab experiment '' (empty string).",
+          "expectedTools": [],
+          "expectedScore": "50-70",
+          "rationale": "Input validation and helpful error message"
+        }
+      ]
+    },
+    {
+      "category": "environment-handling",
+      "description": "Tests for proper BETA/PROD environment handling",
+      "tests": [
+        {
+          "id": "explicit-beta-environment",
+          "name": "Explicit BETA Environment",
+          "prompt": "Analyze experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' in the BETA environment specifically.",
+          "expectedTools": [
+            "weblab_details"
+          ],
+          "expectedScore": "70-85",
+          "rationale": "Explicit environment specification"
+        },
+        {
+          "id": "explicit-prod-environment",
+          "name": "Explicit PROD Environment",
+          "prompt": "Analyze experiment 'WEBLAB_MOBILE_TESTAPP_SESSION_1299744' in the PROD environment specifically.",
+          "expectedTools": [
+            "weblab_details"
+          ],
+          "expectedScore": "70-85",
+          "rationale": "PROD environment with different experiment"
+        },
+        {
+          "id": "environment-comparison",
+          "name": "Environment Comparison",
+          "prompt": "Compare how experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' behaves in BETA vs PROD environments.",
+          "expectedTools": [
+            "weblab_details"
+          ],
+          "expectedScore": "75-90",
+          "rationale": "Cross-environment analysis"
+        }
+      ]
+    },
+    {
+      "category": "business-scenarios",
+      "description": "Real-world business scenario tests",
+      "tests": [
+        {
+          "id": "experiment-health-check",
+          "name": "Experiment Health Check",
+          "prompt": "I need to do a health check on experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516'. Is it running properly and are there any issues I should be aware of?",
+          "expectedTools": [
+            "weblab_details",
+            "weblab_allocations"
+          ],
+          "expectedScore": "75-90",
+          "rationale": "Business health assessment"
+        },
+        {
+          "id": "experiment-readiness",
+          "name": "Experiment Readiness Review",
+          "prompt": "Before I launch experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' to production, what should I verify about its current configuration?",
+          "expectedTools": [
+            "weblab_details",
+            "weblab_allocations"
+          ],
+          "expectedScore": "75-90",
+          "rationale": "Pre-launch validation scenario"
+        },
+        {
+          "id": "performance-investigation",
+          "name": "Performance Investigation",
+          "prompt": "The metrics for experiment 'OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516' look unusual. Help me investigate what might be causing performance issues.",
+          "expectedTools": [
+            "weblab_details",
+            "weblab_allocations",
+            "weblab_activation_history"
+          ],
+          "expectedScore": "80-95",
+          "rationale": "Complex investigation requiring multiple data sources"
+        }
+      ]
+    }
+  ]
+}
