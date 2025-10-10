@@ -66,10 +66,10 @@ I found several excellent SAFE test tables that meet all your criteria:
    • **Status: You have NO current access**
 
 ### **Verification Confirmed:**
-• ✅ Auto-approval verified: All tables use identical policy structure to WEBLAB_DDL tables
-• ✅ No sensitive data: All are clearly marked as test/demo/sample data
-• ✅ No current access: Confirmed you have zero existing access requests
-• ✅ Safe to request: Non-production test data with auto-approval workflows
+• Auto-approval verified: All tables use identical policy structure to WEBLAB_DDL tables
+• No sensitive data: All are clearly marked as test/demo/sample data
+• No current access: Confirmed you have zero existing access requests
+• Safe to request: Non-production test data with auto-approval workflows
 
 ### **Recommended Testing Approach:**
 Start with encompass-test.fdp-test - it's the simplest (1 column) and clearly marked as test data. The auto-approval should
@@ -81,7 +81,7 @@ CLR: 95% - These are definitively safe test tables with auto-approval policies a
 
 ## Summary of Results
 
-✅ **The prompt worked perfectly!** It found exactly what we needed:
+**The prompt worked perfectly!** It found exactly what we needed:
 
 ### Best Table for Testing:
 **encompass-test.fdp-test** - This is the ideal choice because:

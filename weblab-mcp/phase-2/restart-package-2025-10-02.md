@@ -33,7 +33,7 @@
 
 ## 2. Progress
 
-### ✅ Completed & Tested
+### Completed & Tested
 
 * `weblab_details` → GetExperiment API
 * `weblab_allocations` → ListAllocations API
@@ -75,11 +75,11 @@
 ```
 amazon-internal-mcp-server/src/AmazonInternalMCPServer/
 ├── src/tools/weblab/
-│   ├── weblab-details.ts (✓ working)
-│   ├── weblab-allocations.ts (✓ working)
-│   ├── weblab-activation-history.ts (✓ working)
-│   ├── weblab-user-experiments.ts (✓ working)
-│   ├── weblab-request-andes-access.ts (✓ working)
+│   ├── weblab-details.ts (working)
+│   ├── weblab-allocations.ts (working)
+│   ├── weblab-activation-history.ts (working)
+│   ├── weblab-user-experiments.ts (working)
+│   ├── weblab-request-andes-access.ts (working)
 │   ├── weblab-health-check.ts (drafted)
 │   ├── accessible-metrics.ts (in-progress)
 │   ├── index.ts (exports all tools)
@@ -170,11 +170,11 @@ if (metricsDir) {
 
 ### Blockers
 
-* ✅ ~~Waiting on Chetan response~~ **RESOLVED: Fork confirmed, merge rejected (10/02/2025)**
+* ~~Waiting on Chetan response~~ **RESOLVED: Fork confirmed, merge rejected (10/02/2025)**
 * ⏰ **URGENT: amzn-mcp deprecation by end of October 2025**
 * ⚠️ TypeScript errors unverified
 * ⚠️ Andes permissions deferred
-* ✅ ~~Metrics clarification~~ **RESOLVED: Baseline data from old strategy, available Oct 11**
+* ~~Metrics clarification~~ **RESOLVED: Baseline data from old strategy, available Oct 11**
 
 ---
 
@@ -197,8 +197,8 @@ if (metricsDir) {
 * Use cases: TAA detection, allocation history, monitoring.
 * Integration target: WLBR.AI (currently not Andes-based).
 * Science team collaboration needed.
-* ✅ Tools align with mandate (6 modular building blocks).
-* ✅ Andes integration via `weblab_user_experiments`.
+* Tools align with mandate (6 modular building blocks).
+* Andes integration via `weblab_user_experiments`.
 
 ---
 
@@ -210,11 +210,11 @@ if (metricsDir) {
 | **Guide**    | toolbox-vending-guide.md        | Complete    |
 | **Meeting**  | ryan-10-02.md                   | Context     |
 | **Auth**     | authentication-clarification.md | Reference   |
-| **Code**     | weblab-details.ts               | ✓           |
-| **Code**     | weblab-allocations.ts           | ✓           |
-| **Code**     | weblab-activation-history.ts    | ✓           |
-| **Code**     | weblab-user-experiments.ts      | ✓           |
-| **Code**     | weblab-request-andes-access.ts  | ✓           |
+| **Code**     | weblab-details.ts               |           |
+| **Code**     | weblab-allocations.ts           |           |
+| **Code**     | weblab-activation-history.ts    |           |
+| **Code**     | weblab-user-experiments.ts      |           |
+| **Code**     | weblab-request-andes-access.ts  |           |
 | **Code**     | weblab-health-check.ts          | Drafted     |
 | **Code**     | accessible-metrics.ts           | In-progress |
 | **Tests**    | tools.test.ts                   | PASSING     |
@@ -225,7 +225,7 @@ if (metricsDir) {
 ## 8. Decision Matrix
 
 ```
-Current State: Fork Decision CONFIRMED ✅ (10/02/2025)
+Current State: Fork Decision CONFIRMED (10/02/2025)
 
 URGENT: amzn-mcp deprecation by end of October 2025
 

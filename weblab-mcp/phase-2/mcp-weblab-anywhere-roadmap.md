@@ -16,13 +16,41 @@ Building MCP tools enabling LLM-powered weblab experiment management through nat
 
 ---
 
+## Safety-First Approach (2025 Scope)
+
+**CRITICAL CONSTRAINT - READ-ONLY FOR 2025:**
+
+> "We're doing MCP but for 2025 it is read-only to protect the safety of the control plane."
+> 
+> — William Josephson, PE (October 9, 2025)
+
+**Why Read-Only:**
+- Weblab is a tier-1 service with 125+ dependencies
+- Control plane availability is non-negotiable
+- Write operations (create/modify experiments, dial up/down) introduce availability risk
+- Central Reliability and Response Engineering (CRRE) mandates safety-first approach
+
+**2025 Scope (Phase 2):**
+- Read-only MCP tools (experiment details, allocations, history, data queries)
+- Natural language interface for weblab data access
+- Safe observability and monitoring capabilities
+
+**2026+ Scope (Phase 3):**
+- Write capabilities (create/modify experiments)
+- Automated dial-up workflows (with safety measures)
+- Full experiment lifecycle automation
+
+**Reference:** See [James/William Safety Thread](../../threads/james-william-mcp-safety-thread.md) for complete discussion and decision authority.
+
+---
+
 ## CCI Mandate Context
 
 ### MCP Everywhere Initiative - Remote-First Requirement
 
 **Source**: https://w.amazon.com/bin/view/AppliedAI/MCPEverywhere
 
-**Mandatory Goal #3 (Critical):**
+**Mandatory Goal #3 (CRITICAL):**
 > "Remote-First Architecture: Implementing a Remote Agent-first and Remote MCPServer-first approach for better scalability and share-ability."
 
 **Why Remote-First:**
@@ -54,7 +82,7 @@ Building MCP tools enabling LLM-powered weblab experiment management through nat
 
 ## Architecture Strategy
 
-### ❌ What We're NOT Doing
+### What We're NOT Doing
 
 **Local Fork Strategy (September plan):**
 ```
@@ -66,13 +94,13 @@ Weblab APIs
 ```
 
 **Why NOT:**
-- ❌ Local server violates remote-first mandate
-- ❌ Not scalable beyond single user
-- ❌ stdio communication not shareable
-- ❌ amzn-mcp deprecating by end of October 2025
-- ❌ Chetan rejected merge request
+- Local server violates remote-first mandate
+- Not scalable beyond single user
+- stdio communication not shareable
+- amzn-mcp deprecating by end of October 2025
+- Chetan rejected merge request
 
-### ✅ What We're Building Instead
+### What We're Building Instead
 
 **Phase 2 Remote Strands Agent (Current plan):**
 ```
@@ -88,18 +116,18 @@ WeblabStrandsAgent (Lambda/Fargate - REMOTE!)
 ```
 
 **Why This Works:**
-- ✅ **Remote-first compliant** - Hosted in AWS, not user's machine
-- ✅ **Scalable** - Lambda auto-scaling, shared infrastructure
-- ✅ **MCP native** - Strands has built-in MCP support (MCPClient)
-- ✅ **Can BE an MCP server** - Expose agent as MCP endpoint
-- ✅ **Production-ready** - OpenTelemetry, CloudWatch metrics
-- ✅ **Reuses Phase 1 work** - 6 tools, API patterns, authentication
+- **Remote-first compliant** - Hosted in AWS, not user's machine
+- **Scalable** - Lambda auto-scaling, shared infrastructure
+- **MCP native** - Strands has built-in MCP support (MCPClient)
+- **Can BE an MCP server** - Expose agent as MCP endpoint
+- **Production-ready** - OpenTelemetry, CloudWatch metrics
+- **Reuses Phase 1 work** - 6 tools, API patterns, authentication
 
 ---
 
 ## Current Progress
 
-### ✅ Phase 1 Complete (September 2025)
+### Phase 1 Complete (September 2025)
 
 **6 Working Tools Built:**
 1. `weblab_details` → GetExperiment API
@@ -110,11 +138,11 @@ WeblabStrandsAgent (Lambda/Fargate - REMOTE!)
 6. `weblab_health_check` → System health monitoring
 
 **Technical Achievements:**
-- ✅ Dual authentication (Midway + Weblab API keys)
-- ✅ Public WeblabAPIModel APIs (no page scraping)
-- ✅ Comprehensive test suite (2179 tests passing)
-- ✅ BETA and PROD environment support
-- ✅ Andes integration via HTTP bridge
+- Dual authentication (Midway + Weblab API keys)
+- Public WeblabAPIModel APIs (no page scraping)
+- Comprehensive test suite (2179 tests passing)
+- BETA and PROD environment support
+- Andes integration via HTTP bridge
 
 **Key Learnings:**
 - API patterns and error handling
@@ -138,7 +166,7 @@ WeblabStrandsAgent (Lambda/Fargate - REMOTE!)
 
 ## Roadmap (Updated October 2, 2025)
 
-### Phase 1: Tools & Validation ✅ COMPLETE
+### Phase 1: Tools & Validation COMPLETE
 **Timeline:** June-September 2025  
 **Status:** Complete
 
@@ -278,7 +306,7 @@ def analyze_weblab(experiment_id: str) -> dict:
 
 | Aspect | Previous Plan (Local Fork) | Current Plan (Remote Strands) |
 |--------|---------------------------|-------------------------------|
-| **CCI Compliance** | ❌ Violates remote-first | ✅ Meets mandate |
+| **CCI Compliance** | Violates remote-first | Meets mandate |
 | **Scalability** | Per-user, limited | Auto-scaling, shared |
 | **Deployment** | User's machine | AWS Lambda/Fargate |
 | **Authentication** | Midway only | CloudAuth + TA |
@@ -366,11 +394,11 @@ def analyze_weblab(experiment_id: str) -> dict:
 ### Decision 1: Remote Strands Agent (Not Local Fork)
 
 **Drivers:**
-- ✅ MCP Everywhere mandate requires remote-first
-- ✅ Chetan rejected amzn-mcp merge (Oct 2, 2025)
-- ✅ amzn-mcp deprecating by end of October 2025
-- ✅ Strands provides production-ready patterns
-- ✅ Doug's reference architecture available
+- MCP Everywhere mandate requires remote-first
+- Chetan rejected amzn-mcp merge (Oct 2, 2025)
+- amzn-mcp deprecating by end of October 2025
+- Strands provides production-ready patterns
+- Doug's reference architecture available
 
 **Trade-offs:**
 - ⬆️ Increased complexity (service hosting vs local binary)
@@ -383,11 +411,11 @@ def analyze_weblab(experiment_id: str) -> dict:
 ### Decision 2: Python/Strands (Not TypeScript/MCP-only)
 
 **Drivers:**
-- ✅ Strands native MCP support (MCPClient + can be MCP server)
-- ✅ Doug's production patterns in WeblabLearningAppBackendPython
-- ✅ OpenTelemetry observability built-in
-- ✅ Agent orchestration capabilities beyond simple MCP
-- ✅ AWS internal adoption (Q CLI, Glue, etc.)
+- Strands native MCP support (MCPClient + can be MCP server)
+- Doug's production patterns in WeblabLearningAppBackendPython
+- OpenTelemetry observability built-in
+- Agent orchestration capabilities beyond simple MCP
+- AWS internal adoption (Q CLI, Glue, etc.)
 
 **Trade-offs:**
 - ⬆️ Language switch (TS → Python)
@@ -399,10 +427,10 @@ def analyze_weblab(experiment_id: str) -> dict:
 ### Decision 3: Hybrid Metrics Approach
 
 **Drivers:**
-- ✅ accessible-metrics.ts for development (immediate access)
-- ✅ Toolbox telemetry for production (QuickSight dashboards)
-- ✅ Both use your AWS account 975049930647
-- ✅ No single point of failure
+- accessible-metrics.ts for development (immediate access)
+- Toolbox telemetry for production (QuickSight dashboards)
+- Both use your AWS account 975049930647
+- No single point of failure
 
 **Implementation:**
 - Local JSON file for dev testing
@@ -414,32 +442,53 @@ def analyze_weblab(experiment_id: str) -> dict:
 
 ---
 
-## Data Access Strategy (From Oct 2 Meetings)
+## Data Access Strategy (Updated Oct 10, 2025)
 
-### Two Primary Options Identified
+### Dual-Source Approach: WSTLake + Weblab APIs
 
-**Option A: Redshift Cluster Integration**
-- **Pros**: Proven functionality, scalable (adjust compute), has CDK deployment
-- **Cons**: Infrastructure costs, need to maintain cluster
-- **Contact**: Kevin Cruse (@crusekev) - Has CDK patterns for systematic WSTLake querying
-- **Status**: Preferred for initial implementation
+**Data Source Selection:**
+- **WSTLake (via AndesClientPython)**: Historical/bulk queries, 1-day publication SLA
+- **Weblab APIs**: Real-time data for newly created experiments
+- **Agent Logic**: Automatically selects source based on query recency requirements
 
-**Option B: Athena MCP Server**
-- **Pros**: No infrastructure costs, uses existing andes-mcp metadata, auto-approval processes
-- **Cons**: Dependent on andes-mcp availability, less control
-- **Contact**: Arpit - Athena MCP server integration
-- **Status**: Investigate as cost-optimization path
+**1. WSTLake Access (Bulk Historical Data)**
+- **Package**: AndesClientPython for direct SDK access
+- **Package**: andes-mcp for natural language SQL generation
+- **Performance**: 8-25 seconds for properly filtered queries
+- **Limitation**: 1-day publication SLA - new experiments not immediately visible
+- **Use For**: Multi-experiment analysis, historical trends, policy compliance reports
 
-**WSTLake Data Quality:**
-- WSTLake 1.0: Overlapping info, data modeling challenges
-- **WSTLake 2.0**: Dimensional modeling, machine-readable, proper documentation (RECOMMENDED)
+**2. Weblab API Access (Real-time Current State)**
+- **APIs**: GetExperiment, ListAllocations, ListAllocationPeriods (WeblabAPIModel)
+- **Performance**: Sub-2 second response
+- **Limitation**: Single experiment at a time, no bulk queries
+- **Use For**: Newly created experiments, immediate status checks, allocation monitoring
 
-**Real-World Complexity Example:**
-Kevin's query for "launched weblabs with stat sig CP impact":
-- Took **3 days to formulate** manually
-- Joins activation_events + weblab_analysis_results
-- 100+ lines of SQL with complex filters
-- **Clear AI/agent value proposition**
+**3. Natural Language SQL Generation**
+- **Package**: andes-mcp (GenerateAndesSqlQuery tool)
+- **Function**: Translates questions to SQL, agent executes via AndesClientPython
+- **Benefit**: Handles Kevin's 3-day manual SQL queries in seconds
+
+### Query Performance Requirements
+
+**Partition Key Requirements (Critical):**
+WSTLake tables require partition keys for acceptable performance:
+- **region_id**: Must specify single region (multi-region queries timeout)
+- **event_day_local**: Date filter mandatory
+- **experiment_id**: Improves performance dramatically when known
+
+**Performance Examples:**
+- Properly filtered query (region + date + experiment): 8-25 seconds
+- Missing partition keys: Does not complete (20+ minute timeout)
+- Multiple regions in single query: Does not complete
+
+**Agent Query Generation:**
+- Enforces partition key inclusion in all WSTLake queries
+- Splits multi-region requests into sequential single-region queries
+- Validates date ranges before execution
+
+**Real-World Use Case:**
+Kevin's query for "launched weblabs with stat sig CP impact" took 3 days to formulate manually - involves joining activation_events + weblab_analysis_results with 100+ lines of complex SQL. Agent handles this automatically.
 
 ### Existing Natural Language Query UI
 
@@ -524,6 +573,69 @@ mcp_server = create_mcp_server(agent, tools=[
 - OpenTelemetry collector
 - IAM roles and permissions
 
+### WSTLake Access via AndesClientPython (NEW)
+
+**Direct SDK Integration:**
+```python
+from andes_client_python import AndesClient
+from strands import tool
+
+# Initialize Andes client with CloudAuth
+andes_client = AndesClient.builder()
+    .with_authentication(CloudAuth)
+    .with_endpoint("prod-iad.andes.a2z.com")
+    .build()
+
+@tool
+def query_wstlake(sql: str) -> dict:
+    """Execute SQL query against WSTLake via Andes SDK"""
+    # Direct Redshift access through Andes
+    result = andes_client.query_executor.execute(
+        sql=sql,
+        database="wstlake",
+        user="weblab_ro"
+    )
+    return result
+
+@tool
+def check_weblab_taa(weblab_id: str) -> dict:
+    """Check if weblab has TAA (Testing Authorization Approval)"""
+    sql = f"""
+    SELECT weblab, has_taa, taa_details
+    FROM weblab.wst.taa_metadata
+    WHERE weblab = '{weblab_id}'
+    """
+    return query_wstlake(sql)
+```
+
+**Hybrid Approach (SDK + andes-mcp):**
+```python
+# Direct SDK for production queries
+from andes_client_python import AndesClient
+
+# MCP for NL→SQL generation
+from strands.tools.mcp import MCPClient
+
+andes_sdk = AndesClient.builder().with_authentication(CloudAuth).build()
+andes_mcp = MCPClient(lambda: streamablehttp_client(...))
+
+@tool
+def query_wstlake_smart(question: str) -> dict:
+    """Natural language query with AI-generated SQL"""
+    # Step 1: Generate SQL via andes-mcp
+    sql_result = andes_mcp.call('GenerateAndesSqlQuery', {
+        'userQuery': f"{question}. Use WEBLAB_DDL provider."
+    })
+    sql = extract_sql(sql_result)
+    
+    # Step 2: Execute via direct SDK (faster, more reliable)
+    return andes_sdk.query_executor.execute(sql)
+
+agent = Agent(
+    tools=[weblab_details, weblab_allocations, query_wstlake_smart]
+)
+```
+
 ### Authentication Patterns
 
 **Service Identity (Agent as Service):**
@@ -572,73 +684,91 @@ async def analyze_experiment(experiment_id: str) -> dict:
 
 ## Phase Breakdown with Milestones
 
-### Phase 2.1: Foundation (Week 1-2, Oct 7-18)
+### Phase 2.1: Proof of Concept (Week 1, Oct 7-11)
 
-**Week 1: Setup & Investigation**
+**Week 1: AndesClientPython Integration PoC**
 - [x] MCP Everywhere mandate analysis
-- [x] Chetan thread resolution (fork confirmed, baseline metrics Oct 11)
+- [x] Chetan thread resolution
+- [x] Andes Client SDK investigation (AndesClientPython discovered)
+- [ ] Create minimal Strands agent (Python)
+- [ ] Integrate AndesClientPython SDK
+- [ ] Implement single tool: "Does weblab have TAA?"
+- [ ] Validate CloudAuth + Andes connectivity
+- [ ] Test local execution
+- [ ] Document findings
+
+**Success Criteria:**
+- AndesClientPython integrated successfully
+- CloudAuth authentication working
+- Single WSTLake query executing
+- Agent responding correctly
+- Ready to expand to full 6 tools
+
+### Phase 2.2: Foundation (Week 2-3, Oct 14-25)
+
+**Week 2: Setup & Investigation**
 - [ ] Verify weblab Must-Do status (QuickSight)
 - [ ] Contact MCP Everywhere team
-- [ ] Research CloudAuth MCP SDK
-- [ ] Review Doug's code patterns
+- [ ] Research CloudAuth MCP SDK patterns
+- [ ] Review Doug's code patterns in detail
 
-**Week 2: Package Creation**
+**Week 3: Package Creation**
 - [ ] Create WeblabStrandsAgent Python package
 - [ ] Set up CDK infrastructure package
 - [ ] Configure development environment
 - [ ] Establish testing framework
 
-### Phase 2.2: Core Development (Week 3-4, Oct 21-Nov 1)
+### Phase 2.3: Core Development (Week 4-5, Oct 28-Nov 8)
 
-**Week 3: Tool Migration**
+**Week 4: Tool Migration**
 - [ ] Port 6 tools from TypeScript to Python
 - [ ] Implement Strands @tool decorators
 - [ ] Add OpenTelemetry instrumentation
 - [ ] Test each tool individually
 
-**Week 4: Agent Integration**
+**Week 5: Agent Integration**
 - [ ] Create Strands agent with tools
 - [ ] Implement system prompts
 - [ ] Add session management
 - [ ] Test agent orchestration
 
-### Phase 2.3: MCP Protocol (Week 5-6, Nov 4-15)
+### Phase 2.4: MCP Protocol (Week 6-7, Nov 11-22)
 
-**Week 5: MCP Interface**
+**Week 6: MCP Interface**
 - [ ] Implement MCP server protocol
 - [ ] Add CloudAuth authentication
 - [ ] Support Transitive Auth
 - [ ] Create MCP tool wrappers
 
-**Week 6: Testing & Validation**
+**Week 7: Testing & Validation**
 - [ ] Test remote MCP connections
 - [ ] Validate with Q CLI
 - [ ] Test with other MCP clients
 - [ ] Performance testing
 
-### Phase 2.4: Deployment (Week 7-8, Nov 18-29)
+### Phase 2.5: Deployment (Week 8-9, Nov 25-Dec 6)
 
-**Week 7: Infrastructure**
+**Week 8: Infrastructure**
 - [ ] Deploy CDK stacks
 - [ ] Configure Lambda functions
 - [ ] Set up API Gateway
 - [ ] Create IAM roles
 
-**Week 8: Registry & Launch**
+**Week 9: Registry & Launch**
 - [ ] Register in MCP Registry
 - [ ] Internal team testing
 - [ ] Documentation and examples
 - [ ] Monitoring dashboard setup
 
-### Phase 2.5: Compliance & Launch (Week 9-10, Dec 2-13)
+### Phase 2.6: Compliance & Launch (Week 10-11, Dec 9-20)
 
-**Week 9: Compliance**
+**Week 10: Compliance**
 - [ ] Security certification
 - [ ] Documentation audit
 - [ ] CCI program reporting
 - [ ] Stakeholder demos
 
-**Week 10: Production Launch**
+**Week 11: Production Launch**
 - [ ] Enable for broader team
 - [ ] Monitor initial usage
 - [ ] Collect feedback
@@ -673,10 +803,10 @@ async def analyze_experiment(experiment_id: str) -> dict:
 **Mitigation:**
 - CloudAuth MCP SDK available (guidance exists)
 - MCP Everywhere team support
-- Can start with service-identity only, add TA later
-- AmazonMCPGateway as fallback option
+- Phased approach: service-identity first, then TA
+- Multiple authentication patterns documented
 
-**Likelihood:** Medium | **Impact:** Medium | **Mitigation:** Moderate
+**Likelihood:** Medium | **Impact:** Medium | **Mitigation:** Strong
 
 ### Low Risk: Strands Learning Curve
 
@@ -702,12 +832,12 @@ async def analyze_experiment(experiment_id: str) -> dict:
    - Timeline: October 2025
 
 2. **CloudAuth MCP SDK**
-   - Status: Python SDK released October 2025
-   - Package: Python-CloudAuth-MCP-Support
-   - Seamless Strands integration confirmed
-   - Code examples: CloudAuthPythonMcpTestService, CloudAuthPythonMcpTestAgent
-   - Link: https://w.amazon.com/bin/view/Dev.CDO/UnifiedAuth/CloudAuth/Onboarding/MCP/Python/
-   - Impact: Major blocker removed, can proceed with implementation
+   - Package: Python-CloudAuth-MCP-Support (released October 2025)
+   - Provides CloudAuthFastMCP for server authentication
+   - Provides cloudauth_streamablehttp_client for client connections
+   - Full working examples available (CloudAuthPythonMcpTestService, CloudAuthPythonMcpTestAgent)
+   - Documentation: https://w.amazon.com/bin/view/Dev.CDO/UnifiedAuth/CloudAuth/Onboarding/MCP/Python/
+   - Python 3.10+ required
 
 3. **MCP Registry**
    - Status: Operational
@@ -722,17 +852,17 @@ async def analyze_experiment(experiment_id: str) -> dict:
 ### Internal Dependencies
 
 1. **Doug's Reference Code**
-   - Status: ✅ Available in workspace
+   - Status: Available in workspace
    - Location: WeblabLearningAppBackendPython, WeblabLearningAppBackendCDK
    - Use: Patterns for deployment and observability
 
 2. **Phase 1 API Work**
-   - Status: ✅ Complete
+   - Status: Complete
    - Assets: 6 working tools, test suite, API patterns
    - Reuse: 90% of API logic portable to Strands
 
 3. **AWS Account Access**
-   - Status: ✅ Have access to 975049930647
+   - Status: Have access to 975049930647
    - Need: CloudWatch, Lambda deployment permissions
    - Use: Metrics, logging, hosting
 
@@ -784,12 +914,11 @@ async def analyze_experiment(experiment_id: str) -> dict:
 4. Do we need security review before starting development? **ANSWERED: Staged, can start dev first (Michael meeting)**
 
 ### Important (Need Answers This Month)
-5. CloudAuth MCP SDK Python version - Python-CloudAuth-MCP-Support package available
-6. Transitive Auth implementation - any examples?
-7. MCP Registry registration - what's the process?
-8. Hosting costs - Lambda vs Fargate comparison?
-9. Redshift vs Athena - final decision and cost comparison
-10. Kevin Cruse engagement - Get CDK patterns and WSTLake guidance
+5. Transitive Auth implementation - any examples?
+6. MCP Registry registration - what's the process?
+7. Hosting costs - Lambda vs Fargate comparison?
+8. Redshift vs Athena - final decision and cost comparison
+9. Kevin Cruse engagement - Get CDK patterns and WSTLake guidance
 
 ### Nice to Have (Can Defer)
 11. Integration with WLBR.AI timeline?
@@ -802,9 +931,9 @@ async def analyze_experiment(experiment_id: str) -> dict:
 ## Next Actions (Immediate)
 
 ### This Week (Oct 2-6)
-1. ✅ Document MCP Everywhere mandate findings
-2. ✅ Save Chetan thread with resolution
-3. ✅ Read meeting notes (Ryan, Michael, YJ)
+1. Document MCP Everywhere mandate findings
+2. Save Chetan thread with resolution
+3. Read meeting notes (Ryan, Michael, YJ)
 4. [ ] Check weblab Must-Do status (QuickSight)
 5. [ ] Contact MCP Everywhere team (#mcp-everywhere-cci-interest)
 6. [ ] Get Chetan baseline metrics (Friday Oct 11)
@@ -845,10 +974,19 @@ async def analyze_experiment(experiment_id: str) -> dict:
 - [WeblabLearningAppBackendPython](WeblabLearningAppBackendPython/) - Doug's agent patterns
 - [WeblabLearningAppBackendCDK](WeblabLearningAppBackendCDK/) - Deployment infrastructure
 - [Strands MCP Investigation](docs/weblab-mcp/llm-mcp-strands-investigation.md) - Strands capabilities
+- [AndesClientPython](https://code.amazon.com/packages/AndesClientPython) - Python SDK for Andes API access
+- [Andes Integration Guide](docs/weblab-mcp/historical/andes-integration.md) - Comprehensive Andes MCP integration findings
+
+### Andes Data Access
+- [Andes API Hub](https://datacentral.a2z.com/api-hub/andes) - Unified Andes API documentation
+- [andes-mcp Registry](https://console.harmony.a2z.com/mcp-registry/server/andes-mcp) - MCP server for Andes operations
+- [Andes Client SDK Setup](https://w.amazon.com/bin/view/BDT/Products/Andes/UserGuide/Onboarding/CloudAuth/) - CloudAuth authentication guide
+- [2,397 Weblab Datasets](docs/weblab-mcp/historical/andes-integration.md#weblab-data-discovery) - Complete WSTLake catalog
 
 ### External Tools & References
 - [Beta NL Query UI](https://beta.console.harmony.a2z.com/weblab-data-management/wstlake-query) - Existing natural language interface
 - [Kevin's Complex Query Example](docs/weblab-mcp/weblab-mcp-meetings/yj-10-02.md) - 3-day SQL formulation showing AI value
+- [Andi Demo (Broadcast)](https://broadcast.amazon.com/videos/1635983) - BDT's NL-to-SQL tool demo (July 2025)
 
 ### Support Channels
 - **Slack**: #mcp-everywhere-cci-interest
@@ -862,17 +1000,23 @@ async def analyze_experiment(experiment_id: str) -> dict:
 The discovery of the MCP Everywhere remote-first mandate clarifies our path forward: **build a remote Strands agent that satisfies CCI requirements while delivering enterprise-grade weblab data access**.
 
 This approach:
-- ✅ Meets mandatory CCI compliance
-- ✅ Leverages proven production patterns (Doug's work)
-- ✅ Reuses Phase 1 investment (6 tools, APIs, tests)
-- ✅ Provides scalable, shareable solution
-- ✅ Sets foundation for advanced workflows
+- Meets mandatory CCI compliance
+- Leverages proven production patterns (Doug's work)
+- Reuses Phase 1 investment (6 tools, APIs, tests)
+- Provides scalable, shareable solution
+- Sets foundation for advanced workflows
 
 Success requires focus and discipline to meet Q1 2026 deadline, but the architecture is validated and the technical path is clear.
 
 ---
 
-**Roadmap Version:** 2.0 (Major revision - remote-first architecture)  
-**Last Updated:** October 2, 2025  
-**Next Review:** October 9, 2025 (after Must-Do verification)  
-**Status:** Active development, remote Strands agent approach
+**Roadmap Version:** 2.1 (Andes Client SDK integration)  
+**Last Updated:** October 8, 2025  
+**Next Review:** October 15, 2025 (after Week 1 PoC completion)  
+**Status:** Active - Manager Review
+
+**Key Updates:**
+- Added Week 1 Proof of Concept with AndesClientPython SDK
+- Discovered direct Andes SDK as primary data access method
+- Hybrid approach: AndesClientPython (direct) + andes-mcp (NL→SQL)
+- Renumbered timeline to 11 weeks (Week 1-11)

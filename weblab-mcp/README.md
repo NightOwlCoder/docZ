@@ -8,11 +8,17 @@
 
 ## Start Here
 
+**CRITICAL: 2025 Scope is Read-Only**
+> "We're doing MCP but for 2025 it is read-only to protect the safety of the control plane."  
+> — William Josephson, PE (Oct 9, 2025)
+
+Weblab MCP will provide read-only access (experiment details, allocations, data queries) in 2025. Write capabilities (create/modify experiments, dial-up) deferred to 2026+ to protect tier-1 service availability.
+
 **For Stakeholders (Leadership/Management):**
 - **[Technical Roadmap](phase-2/mcp-weblab-anywhere-roadmap.md)** - Complete project plan, timeline, architecture
 
-**For 3YAP Contributors:**
-- **[Use Cases & Strategy](phase-2/mcp-weblab-anywhere-use-cases-strategy.md)** - Will's primitive (you support)
+**For [3YAP](https://quip-amazon.com/l52lAKv6Kb93/3YAP-execution-plan) Contributors:**
+- **[Use Cases & Strategy](phase-2/mcp-weblab-anywhere-use-cases-strategy.md)** - Will's primitive (Sergio's support)
 - **[Technical Vision](phase-2/mcp-weblab-anywhere-technical-vision.md)** - Sergio's primitive (Doug/YJ/Arpit support)
 
 **For Engineers (Implementation):**
@@ -60,23 +66,24 @@
 ### Active Documents (Phase 2)
 
 **Strategy & Planning:**
-- phase-2/mcp-weblab-anywhere-roadmap.md
-- phase-2/mcp-weblab-anywhere-use-cases-strategy.md
-- phase-2/mcp-weblab-anywhere-technical-vision.md
+- [Weblab MCP - Technical Roadmap & Architecture](phase-2/mcp-weblab-anywhere-roadmap.md) - Complete project plan, timeline, data strategy, performance requirements
+- [MCP/AI Use Cases and Strategy - Brainstorm](phase-2/mcp-weblab-anywhere-use-cases-strategy.md) - Customer pain points, collected use cases, 3-year vision
+- [MCP/AI Technical Vision - Brainstorm](phase-2/mcp-weblab-anywhere-technical-vision.md) - Implementation approach, tech stack decisions, challenges
 
 **Implementation & Reference:**
-- phase-2/phase-2-dev-setup.md
-- phase-2/strands-implementation-research/ (Doug's patterns)
-- phase-2/authentication-clarification.md
-- phase-2/toolbox-vending-guide.md
+- [Phase 2 Development Setup - Strands Agent Local Testing](phase-2/phase-2-dev-setup.md) - Local development guide with brazil-runtime-exec patterns
+- [Doug's Strands Implementation Research](phase-2/strands-implementation-research/) - Production reference implementations
+- [Authentication Clarification: andes-mcp vs Direct Redshift](phase-2/authentication-clarification.md) - Auth patterns comparison
+- [Toolbox Vending Guide for Weblab MCP](phase-2/toolbox-vending-guide.md) - Distribution setup and telemetry
 
 **Decision History:**
-- phase-2/mcp-everywhere-mandate.md
-- phase-2/restart-package-2025-10-02.md
-- ../threads/chetan-amzn-mcp-thread.md
+- [MCP Everywhere Initiative - Critical Mandate Analysis](phase-2/mcp-everywhere-mandate.md) - Remote-first requirement and strategy pivot
+- [Weblab MCP - Project Restart Package](phase-2/restart-package-2025-10-02.md) - Oct 2 project snapshot with decisions
+- [Chetan Soni - amzn-mcp Discussion Thread](../threads/chetan-amzn-mcp-thread.md) - Fork vs merge decision
+- [James McQueen & William Josephson - MCP Safety Discussion](../threads/james-william-mcp-safety-thread.md) - Read-only 2025 scope
 
 **Meetings:**
-- weblab-mcp-meetings/
+- [All Meetings](weblab-mcp-meetings/) - Ryan, Michael, YJ, Jakub, Doug, Adam
 
 ### Reference Documents (Background)
 
@@ -156,13 +163,3 @@ docs/weblab-mcp/
 └── weblab-mcp-meetings/         # Meeting notes
     └── Organized by date/person
 ```
-
-
--   Docling RAG Agent and examples:
-https://github.com/coleam00/ottomator-agents/tree/main/docling-rag-agent
-
--   Docling GitHub repository:
-https://github.com/docling-project/docling
-
--   Docling documentation:
-https://docling-project.github.io/docling/

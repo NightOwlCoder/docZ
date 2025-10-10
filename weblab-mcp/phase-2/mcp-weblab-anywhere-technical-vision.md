@@ -1,9 +1,32 @@
 # MCP/AI Technical Vision - Brainstorm
 
 **Owner:** Sergio Ibagy (with support from Doug, YJ, Arpit)  
-**Date:** October 2, 2025  
+**Date:** October 2, 2025 (Updated Oct 9, 2025)  
 **Purpose:** Input for Weblab 3YAP - Technical architecture and implementation approach for MCP/AI  
 **Status:** DRAFT - Brainstorming phase, not final
+
+---
+
+## Safety-First Constraint (2025)
+
+**CRITICAL: READ-ONLY FOR 2025**
+
+> "We're doing MCP but for 2025 it is read-only to protect the safety of the control plane."  
+> — William Josephson, PE (October 9, 2025)
+
+**Technical Implications:**
+- 2025 tools: Read-only operations (GetExperiment, ListAllocations, query data)
+- 2026+ tools: Write operations (CreateExperiment, UpdateAllocation, dial-up)
+- Architecture supports both, but access controls limit to read-only initially
+- Safety measures and monitoring required before enabling write capabilities
+
+**Why This Matters:**
+- Weblab is tier-1 service with 125+ client dependencies
+- Control plane availability non-negotiable
+- Gradual rollout reduces risk
+- Prove architecture safety before adding write operations
+
+**Reference:** [James/William Safety Thread](../../threads/james-william-mcp-safety-thread.md)
 
 ---
 
@@ -38,11 +61,11 @@ Weblab MCP Tools (TypeScript)
 ```
 
 **What works:**
-- ✅ All 3 tools tested with Vignesh (director demo)
-- ✅ 2179 tests passing
-- ✅ Dual authentication (Midway + Weblab API keys)
-- ✅ BETA and PROD environment support
-- ✅ Integration with andes-mcp for Andes SQL queries
+- All 3 tools tested with Vignesh (director demo)
+- 2179 tests passing
+- Dual authentication (Midway + Weblab API keys)
+- BETA and PROD environment support
+- Integration with andes-mcp for Andes SQL queries
 
 **Technical achievements:**
 - Proper API authentication (not page scraping)
@@ -224,9 +247,9 @@ Result: Natural language answer with synthesized insights
 ```
 
 **This distinguishes our approach from:**
-- ❌ Chat UI with decision tree (not reasoning)
-- ❌ LLM without goals (no orchestration)
-- ❌ Opaque automation (no transparency)
+- Chat UI with decision tree (not reasoning)
+- LLM without goals (no orchestration)
+- Opaque automation (no transparency)
 
 ### Why Strands Agent
 
@@ -254,11 +277,11 @@ WeblabStrandsAgent (Lambda - REMOTE!)
 ```
 
 **Key properties:**
-- ✅ Remote-first compliant
-- ✅ Scalable (Lambda auto-scaling)
-- ✅ Shareable (org-wide access)
-- ✅ MCP native (Strands SDK support)
-- ✅ Production-ready (Doug's patterns)
+- Remote-first compliant
+- Scalable (Lambda auto-scaling)
+- Shareable (org-wide access)
+- MCP native (Strands SDK support)
+- Production-ready (Doug's patterns)
 
 ### Technical Benefits
 
@@ -376,9 +399,9 @@ result = andes_tools.call('DataCentralWorkbench', {
 - Performance tuning and cost optimization
 
 **Technical debt addressed:**
-- ✅ Remove dependency on amzn-mcp (deprecating)
-- ✅ Proper remote architecture (mandate-compliant)
-- ✅ Standard service patterns (not custom)
+- Remove dependency on amzn-mcp (deprecating)
+- Proper remote architecture (mandate-compliant)
+- Standard service patterns (not custom)
 
 ### Year 2 (2027): Write Capabilities & Automation
 

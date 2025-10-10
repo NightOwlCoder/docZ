@@ -133,22 +133,22 @@ Query the table encompass-test.fdp-test to test permission flow
 
 ## Validation Checklist
 
-### ✅ Permission Denied Detection
+### Permission Denied Detection
 - [ ] Tool correctly identifies permission error
 - [ ] Returns proper error message to Q
 - [ ] Q asks user if they want to request access
 
-### ✅ Access Request
+### Access Request
 - [ ] weblab_request_andes_access is called
 - [ ] Request includes correct table name
 - [ ] Request includes user ID
 - [ ] Auto-approval is detected for test tables
 
-### ✅ Approval Wait
+### Approval Wait
 - [ ] Q waits appropriate time (5-10 seconds)
 - [ ] Shows waiting message to user
 
-### ✅ Successful Retry
+### Successful Retry
 - [ ] Query is automatically retried
 - [ ] Query succeeds after access granted
 - [ ] Results are returned to user

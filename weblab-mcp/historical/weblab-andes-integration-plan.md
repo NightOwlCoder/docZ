@@ -1,7 +1,7 @@
 # Weblab Andes Integration Plan for MCP Tools
 
 ## Current Status
-✅ **Successfully implemented and tested!** We have:
+**Successfully implemented and tested!** We have:
 1. Created the `weblab_andes_objectives` MCP tool structure
 2. Set up authentication using ada profile with IibsAdminAccess role
 3. Created a working shell script that queries WSTLake Andes tables

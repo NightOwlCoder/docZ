@@ -5,11 +5,11 @@
 This guide provides both **explicit tool testing** (direct tool usage) and **natural discovery testing** (Q's ability to pick the right tools from natural language).
 
 **Available Tools (5 total)**:
-1. ✅ **weblab_details** - Get experiment information (working)
-2. ✅ **weblab_allocations** - Check current allocations (working) 
-3. ✅ **weblab_activation_history** - Get change history (working)
+1. **weblab_details** - Get experiment information (working)
+2. **weblab_allocations** - Check current allocations (working) 
+3. **weblab_activation_history** - Get change history (working)
 4. ⚠️ **weblab_search** - Search experiments (returns limitation message)
-5. ✅ **weblab_user_experiments** - Get user's experiments via Andes SQL (NEW - working!)
+5. **weblab_user_experiments** - Get user's experiments via Andes SQL (NEW - working!)
 
 ## Test Environment Setup
 
@@ -106,7 +106,7 @@ q chat -a --no-interactive "Find all weblabs where I'm the owner"
 q chat -a --no-interactive "Please analyze a BETA weblab experiment. Use weblab_search to find any available experiments in the BETA environment, then analyze one with weblab_details."
 ```
 
-### PROD Environment (✅ NOW SUPPORTED - CR-220258045)
+### PROD Environment (NOW SUPPORTED - CR-220258045)
 ```bash
 # Set environment to PROD
 export WEBLAB_ENVIRONMENT=PROD
@@ -117,13 +117,13 @@ q chat -a --no-interactive "Please analyze weblab experiment 'WEBLAB_MOBILE_TEST
 
 ## Expected Behavior
 
-### ✅ Success Indicators:
+### Success Indicators:
 - LLM calls all 4 weblab tools in logical sequence
 - Each tool returns structured data (not errors)
 - LLM synthesizes information across tools
 - Final report includes insights from all data sources
 
-### ❌ Failure Indicators:
+### Failure Indicators:
 - Tools return authentication errors
 - Environment mismatch (BETA tools, PROD experiment IDs)
 - LLM doesn't recognize when to use which tool
@@ -218,10 +218,10 @@ node docs/testing/weblab-test-runner.js
 
 ## Success Criteria
 
-- ✅ Q naturally discovers correct tools for each type of question
-- ✅ Tools return real data (not errors)
-- ✅ Q uses multiple tools intelligently for complex analysis
-- ✅ Q does NOT use weblab tools for unrelated questions
+- Q naturally discovers correct tools for each type of question
+- Tools return real data (not errors)
+- Q uses multiple tools intelligently for complex analysis
+- Q does NOT use weblab tools for unrelated questions
 
 ## Environment Notes
 
@@ -233,7 +233,7 @@ node docs/testing/weblab-test-runner.js
 
 # Testing Permission Denied Scenario for weblab_user_experiments
 
-## ✅ Test Method (Successfully Tested)
+## Test Method (Successfully Tested)
 
 We added a test condition to weblab-user-experiments.ts that simulates a permission error:
 
@@ -279,7 +279,7 @@ Q should then:
 
 ## Implementation Status
 
-✅ **Both tools now return proper MCP format:**
+**Both tools now return proper MCP format:**
 - `weblab_user_experiments` - Fixed to return MCP-compatible JSON
 - `weblab_request_andes_access` - Fixed to return MCP-compatible JSON
 

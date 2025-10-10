@@ -20,8 +20,8 @@
 4. **Phase 2 Strands plan satisfies mandate** - Remote agent deployment IS the solution
 
 **New Strategy:**
-- ~~Local fork of amzn-mcp~~ ❌ Non-compliant
-- **Remote Strands agent** ✅ Mandate-compliant
+- ~~Local fork of amzn-mcp~~ Non-compliant
+- **Remote Strands agent** Mandate-compliant
 
 ---
 

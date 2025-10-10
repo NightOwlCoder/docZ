@@ -488,17 +488,17 @@ toolbox install weblab-mcp
 
 ---
 
-## Toolbox Telemetry & Custom Metrics - CRITICAL DISCOVERY ✨
+## Toolbox Telemetry & Custom Metrics - CRITICAL DISCOVERY
 
 **EXCELLENT NEWS:** Toolbox has built-in metrics support that can complement your accessible-metrics.ts!
 
 ### What Toolbox Provides Automatically
 
 When you vend via toolbox, you get **FREE**:
-- ✅ Basic usage metrics (installs, updates, exit codes, latency)
-- ✅ QuickSight dashboards (auto-generated)
-- ✅ CloudWatch integration (in YOUR account)
-- ✅ **Custom metrics support via EMF (Embedded Metric Format)**
+- Basic usage metrics (installs, updates, exit codes, latency)
+- QuickSight dashboards (auto-generated)
+- CloudWatch integration (in YOUR account)
+- **Custom metrics support via EMF (Embedded Metric Format)**
 
 ### How Toolbox Telemetry Actually Works
 
@@ -798,10 +798,10 @@ export function recordMetric(data: MetricData) {
 ### What Toolbox Provides Automatically
 
 When you vend via toolbox, you get **FREE**:
-- ✅ Basic usage metrics (installs, updates, exit codes, latency)
-- ✅ QuickSight dashboards (auto-generated, request via ticket)
-- ✅ CloudWatch integration (in YOUR account 975049930647)
-- ✅ **Custom metrics support via EMF (Embedded Metric Format)**
+- Basic usage metrics (installs, updates, exit codes, latency)
+- QuickSight dashboards (auto-generated, request via ticket)
+- CloudWatch integration (in YOUR account 975049930647)
+- **Custom metrics support via EMF (Embedded Metric Format)**
 
 ### How Toolbox Telemetry Actually Works (CORRECTED)
 
@@ -1026,11 +1026,11 @@ export function recordMetric(data: MetricData) {
 ```
 
 **Benefits of Hybrid Approach:**
-- ✅ Local file works during development (no toolbox needed)
-- ✅ Toolbox telemetry for production users
-- ✅ QuickSight dashboards for stakeholders
-- ✅ CloudWatch alarms and insights
-- ✅ No single point of failure
+- Local file works during development (no toolbox needed)
+- Toolbox telemetry for production users
+- QuickSight dashboards for stakeholders
+- CloudWatch alarms and insights
+- No single point of failure
 
 ### Stakeholder Questions - SOLVED
 
@@ -1080,11 +1080,11 @@ For toolbox telemetry to work:
 ## Conclusion
 
 Toolbox vending provides:
-- ✅ Simple user installation (`toolbox install weblab-mcp`)
-- ✅ Automatic updates
-- ✅ Standardized distribution
-- ✅ **Metrics and monitoring BUILT-IN** (no custom code needed!)
-- ✅ QuickSight dashboards auto-generated
+- Simple user installation (`toolbox install weblab-mcp`)
+- Automatic updates
+- Standardized distribution
+- **Metrics and monitoring BUILT-IN** (no custom code needed!)
+- QuickSight dashboards auto-generated
 - ⚠️ Initial setup complexity (5-8 hours)
 - ⚠️ Ongoing maintenance per release (2-3 hours)
 

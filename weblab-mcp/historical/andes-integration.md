@@ -332,7 +332,7 @@ use_mcp_tool({
 
 ### Successful Approach: HTTP Bridge
 
-**Status**: ✅ **WORKING**
+**Status**: **WORKING**
 
 **Files Created**:
 - `andes-http-bridge.js` - HTTP server wrapping andes-mcp
@@ -597,7 +597,7 @@ For integrated Weblab-to-Andes access, we have a working HTTP bridge solution:
 ```
 
 **Current Capabilities**:
-- ✅ Works for Weblab team members (uses `weblab_ro` user)
+- Works for Weblab team members (uses `weblab_ro` user)
 - ⚠️ Non-team members need CreateAccessRequest (to be implemented)
 
 ### Testing Commands

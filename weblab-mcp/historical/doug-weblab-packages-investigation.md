@@ -20,9 +20,9 @@ Doug has created multiple packages for Weblab, but only one actually accesses We
 - Implements Socratic questioning to improve documentation
 
 **What it doesn't do:**
-- ❌ No direct Weblab API integration
-- ❌ Doesn't fetch experiment data, metrics, or allocations
-- ❌ Only receives weblab_id and descriptions as input parameters
+- No direct Weblab API integration
+- Doesn't fetch experiment data, metrics, or allocations
+- Only receives weblab_id and descriptions as input parameters
 
 **Tech Stack:**
 - Framework: Strands agents (Amazon's internal AI framework)

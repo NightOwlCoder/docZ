@@ -5,12 +5,12 @@
 **Issue:** Current metrics implementation sends data to AWS account `976193224607` (`AmznMCPMonitoringRole`) but users can't access this account.
 
 **Impact:** 
-- ✅ Metrics are collected and sent
-- ❌ **You can't see them** - CloudWatch dashboards are inaccessible
-- ❌ Can't answer stakeholder questions about usage  
-- ❌ No practical observability
+- Metrics are collected and sent
+- **You can't see them** - CloudWatch dashboards are inaccessible
+- Can't answer stakeholder questions about usage  
+- No practical observability
 
-## 💡 Practical Solutions
+## Practical Solutions
 
 ### Option 1: Local File-Based Metrics (Immediate)
 
@@ -74,10 +74,10 @@ aws logs create-log-group --log-group-name weblab-mcp-metrics --region us-west-2
 ## 🔧 Immediate Fix: Local + Your Account Hybrid
 
 Let me implement a hybrid approach that:
-1. ✅ Works immediately with local file storage  
-2. ✅ Optionally sends to YOUR AWS account if configured
-3. ✅ Provides instant answers to stakeholder questions
-4. ✅ No dependency on account 976193224607
+1. Works immediately with local file storage  
+2. Optionally sends to YOUR AWS account if configured
+3. Provides instant answers to stakeholder questions
+4. No dependency on account 976193224607
 
 ### Modified Implementation
 
@@ -133,7 +133,7 @@ cat ~/.weblab-mcp/usage-metrics.json | jq 'map(select(.timestamp > "2024-09-26")
 ```markdown
 # Weblab MCP Health Check - ACCESSIBLE VERSION
 
-**Status:** ✅ HEALTHY  
+**Status:** HEALTHY  
 **Metrics Storage:** Local file + Optional CloudWatch
 **Your Account:** 123456789012 (detected)
 
@@ -160,7 +160,7 @@ User Activity:
 ## 💾 Data Storage
 - **Local File:** ~/.weblab-mcp/usage-metrics.json
 - **CloudWatch:** Optional, using your account if configured
-- **Accessible:** ✅ You can view/analyze all data
+- **Accessible:** You can view/analyze all data
 ```
 
 ## 🛠️ Next Steps

@@ -51,7 +51,7 @@ Weblab Service (Tier-1)
 ## 📊 **Test Results**
 
 - **BETA Environment**: 4/4 tests passing ✅
-- **PROD Environment**: 5/6 tests passing ✅ (1 timeout, not functional issue)
+- **PROD Environment**: 5/6 tests passing (1 timeout, not functional issue)
 - **Key Success**: `weblab_activation_history` works in PROD (CR-220258045)
 - **Response Time**: Sub-2 seconds for most queries
 
@@ -71,7 +71,7 @@ AI: Uses weblab_details + weblab_allocations + synthesizes health check
 echo '{"jsonrpc": "2.0", "method": "tools/call", "params": {"name": "weblab_details", "arguments": {"experimentId": "OFFERSX_DP_AOD_INGRESS_BELOW_OFFER_DISPLAY_766516"}}, "id": 1}' | npm start
 ```
 
-## 🚀 **What's Next**
+## What's Next
 
 ### Phase 2: Strands Integration
 - Direct Python tools (no MCP overhead)

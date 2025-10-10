@@ -78,10 +78,10 @@ q chat -a "Compare the configurations between WEBLAB_MOBILE_TESTAPP_SESSION_1299
 ```
 
 ### 4. **The Magic** (30 seconds)
-- ✅ **No manual API calls** - AI figures out which tools to use
-- ✅ **No weblab UI navigation** - Data comes directly to your workflow
-- ✅ **Works with any AI tool** - Q CLI, Cline, RooCode, custom agents
-- ✅ **Service protection** - Uses public APIs with proper rate limiting
+- **No manual API calls** - AI figures out which tools to use
+- **No weblab UI navigation** - Data comes directly to your workflow
+- **Works with any AI tool** - Q CLI, Cline, RooCode, custom agents
+- **Service protection** - Uses public APIs with proper rate limiting
 
 ---
 

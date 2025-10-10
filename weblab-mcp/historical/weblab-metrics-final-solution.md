@@ -3,10 +3,10 @@
 ## 🎯 Architecture: Aggregate Metrics You Can Actually Access
 
 **Problem Solved:** 
-- ✅ All user metrics aggregate to YOUR account (`975049930647`)
-- ✅ You see total adoption across all weblab tool users
-- ✅ Any user can generate reports to show stakeholders
-- ✅ No dependency on inaccessible central account `976193224607`
+- All user metrics aggregate to YOUR account (`975049930647`)
+- You see total adoption across all weblab tool users
+- Any user can generate reports to show stakeholders
+- No dependency on inaccessible central account `976193224607`
 
 ## 📊 How It Works
 
@@ -27,7 +27,7 @@ graph TD
 
 ## 🛠 Implementation Status
 
-### ✅ What's Done
+### What's Done
 1. **Independent metrics system** - doesn't rely on amzn-mcp core
 2. **Local file storage** - always works for immediate answers
 3. **Your account integration** - uses account `975049930647`
@@ -97,7 +97,7 @@ aws logs create-log-group --log-group-name weblab-mcp-aggregate-metrics --region
 - You see total adoption in your CloudWatch dashboards
 - Anyone can run `weblab_usage_report` to see aggregate stats for stakeholders
 
-## 💡 Why This Works
+## Why This Works
 
 **For You (Tool Owner):**
 - See ALL usage across every user of your weblab tools

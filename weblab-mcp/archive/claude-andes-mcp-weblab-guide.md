@@ -133,7 +133,7 @@ By following these exact steps, you will:
 
 ## 🚫 Common Mistakes to Avoid
 
-### ❌ Wrong SQL Syntax
+### Wrong SQL Syntax
 ```sql
 -- DON'T: Missing schema qualification
 SELECT * FROM weblab_metadata 
@@ -141,11 +141,11 @@ SELECT * FROM weblab_metadata
 -- DON'T: Wrong schema reference  
 SELECT * FROM "andes"."WEBLAB_DDL"."weblab_metadata"
 
--- ✅ DO: Correct schema reference for Redshift
+-- DO: Correct schema reference for Redshift
 SELECT * FROM "weblab"."wst"."weblab_metadata"
 ```
 
-### ❌ Wrong Operation Parameters
+### Wrong Operation Parameters
 ```json
 // DON'T: Call execute_query without connection setup
 {
@@ -153,7 +153,7 @@ SELECT * FROM "weblab"."wst"."weblab_metadata"
   "sql": "SELECT * FROM table"  // Missing connectionId!
 }
 
-// ✅ DO: Always include connectionId from step 7
+// DO: Always include connectionId from step 7
 {
   "operation": "execute_query", 
   "connectionId": "8ed3b171-51b4-47f4-a45c-b75515882d4d",
@@ -161,7 +161,7 @@ SELECT * FROM "weblab"."wst"."weblab_metadata"
 }
 ```
 
-### ❌ Not Following the Workflow
+### Not Following the Workflow
 Don't skip steps! The workflow is:
 1. LoadAndesContext
 2. Search/Read datasets  
@@ -201,7 +201,7 @@ ORDER BY ordinal_position;
 
 | Table | Full Path | Purpose |
 |-------|-----------|---------|
-| **weblab_metadata** | `"weblab"."wst"."weblab_metadata"` | ✅ Main experiment details |
+| **weblab_metadata** | `"weblab"."wst"."weblab_metadata"` | Main experiment details |
 | **activation_events** | `"weblab"."wst"."activation_events"` | Allocation changes |
 | **weblab_launches** | `"weblab"."wst"."weblab_launches"` | Launch history |
 | **wla_experiments** | `"weblab"."waba"."wla_experiments"` | Analytics view |
@@ -276,7 +276,7 @@ WHERE created >= '2025-09-01';
 ## 📋 Checklist for Success
 
 - [ ] LoadAndesContext activated ✓
-- [ ] Found WEBLAB_DDL provider ✓  
+- [ ] Found WEBLAB_DDL provider  
 - [ ] Connected to Wstlake database ✓
 - [ ] Created connection with weblab_ro user ✓
 - [ ] Executed simple SELECT query ✓

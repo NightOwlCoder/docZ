@@ -1,9 +1,25 @@
 # MCP/AI Use Cases and Strategy - Brainstorm
 
 **Owner:** Will (with support from Sergio, Doug, YJ, Arpit)  
-**Date:** October 2, 2025  
+**Date:** October 2, 2025 (Updated Oct 9, 2025)  
 **Purpose:** Input for Weblab 3YAP - Use cases and strategic direction for MCP/AI integration  
 **Status:** DRAFT - Brainstorming phase, not final
+
+---
+
+## Safety-First Constraint (2025)
+
+**CRITICAL: READ-ONLY FOR 2025**
+
+> "We're doing MCP but for 2025 it is read-only to protect the safety of the control plane."  
+> — William Josephson, PE (October 9, 2025)
+
+**What This Means for Use Cases:**
+- 2025: Read-only tools (querying, discovery, analysis, reporting)
+- 2026+: Write tools (create/modify experiments, automation)
+- All use cases below categorized by read vs write capabilities
+
+**Reference:** [James/William Safety Thread](../../threads/james-william-mcp-safety-thread.md)
 
 ---
 
@@ -32,19 +48,19 @@ Low-stakes brainstorm to identify:
 Ask these 5 questions about any system claiming to be an "agent":
 
 1. **Does it act on behalf of user to help reach a goal?**
-   - ✅ Weblab: Takes complex query, orchestrates multiple tools, synthesizes answer
+   - Weblab: Takes complex query, orchestrates multiple tools, synthesizes answer
    
 2. **Does it decide when and how to act, not just what?**
-   - ✅ Weblab: Chooses which tools to call, in what order, based on query
+   - Weblab: Chooses which tools to call, in what order, based on query
    
 3. **Does it adapt over time based on input/context?**
-   - ✅ Weblab: Refines queries, learns from conversation context
+   - Weblab: Refines queries, learns from conversation context
    
 4. **Is it designed to collaborate, not just wait for instructions?**
-   - ✅ Weblab: Proactive follow-ups, suggests related queries
+   - Weblab: Proactive follow-ups, suggests related queries
    
 5. **Are boundaries, transparency, and role well-defined?**
-   - ✅ Weblab: Clear scope (read-only initially), explains reasoning
+   - Weblab: Clear scope (read-only initially), explains reasoning
 
 ### What Weblab MCP Is NOT
 
@@ -72,8 +88,10 @@ Ask these 5 questions about any system claiming to be an "agent":
 
 **Impact:** Only data experts can get answers. PMs and non-tech users blocked.
 
-### Web Scraping Chaos
-- Teams resort to scraping weblab.amazon.com pages
+### Web Scraping and API Discovery Gap
+**From Adam meeting:**
+- Users resort to scraping weblab.amazon.com when they don't know APIs exist
+- Education gap rather than capability gap
 - Fragile, breaks with UI changes
 - Weblab team doesn't want it
 - No proper auth or rate limiting
@@ -92,6 +110,20 @@ Ask these 5 questions about any system claiming to be an "agent":
 ---
 
 ## Use Cases Collected
+
+### From Adam Meeting (Oct 8)
+
+**Primary Use Cases - Operational/Troubleshooting:**
+- "Why isn't my analysis completing?" (most common question)
+- "Where is my experiment data?" (data lineage)
+- "Is my experiment trending positive?" (results monitoring)
+- Individual experimenters: single experiment health and progression
+- Policy owners: cross-experiment compliance visibility
+
+**Data Freshness Note:**
+- WSTLake has 1-day publication SLA
+- Newly created experiments not immediately visible in WSTLake
+- Need dual-source strategy: WSTLake (historical) + Weblab APIs (real-time)
 
 ### From Ryan Meeting (Oct 2)
 

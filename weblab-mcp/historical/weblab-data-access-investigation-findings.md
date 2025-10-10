@@ -133,10 +133,10 @@ User → MCP Tool → Weblab API Gateway → Search Microservice → WSTLake/WSS
 - No user infrastructure required
 
 #### Benefits
-- ✅ **For Users**: Simple API calls, no infrastructure setup
-- ✅ **For Weblab Team**: Controlled access, optimized queries
-- ✅ **For Security**: Leverages existing auth layers
-- ✅ **For Maintenance**: Single service, not per-user setups
+- **For Users**: Simple API calls, no infrastructure setup
+- **For Weblab Team**: Controlled access, optimized queries
+- **For Security**: Leverages existing auth layers
+- **For Maintenance**: Single service, not per-user setups
 
 #### Implementation Options
 
