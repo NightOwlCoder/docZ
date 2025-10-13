@@ -40,7 +40,7 @@ Key features include:
 * **Production ready**: Full observability, tracing, and deployment options for running agents at scale.
 * **Model, provider, and deployment agnostic**: Strands supports many different models from many different providers.
 * **Powerful built-in tools**: Get started quickly with tools for a broad set of capabilities.
-* **Multi-agent and autonomous agents**: Apply advanced techniques to your AI systems like agent teams and agents that improve themselves over time.
+* **Multi-agent and autonomous agents**: Apply additional techniques to your AI systems like agent teams and agents that improve themselves over time.
 * **Conversational, non-conversational, streaming, and non-streaming**: Supports all types of agents for various workloads.
 * **Safety and security as a priority**: Run agents responsibly while protecting data.
 
@@ -68,7 +68,7 @@ Next we'll install the `strands-agents` SDK package:
 pip install strands-agents
 ```
 
-The Strands Agents SDK additionally offers the [`strands-agents-tools`](https://pypi.org/project/strands-agents-tools/) ([GitHub](https://github.com/strands-agents/tools)) and [`strands-agents-builder`](https://pypi.org/project/strands-agents-builder/) ([GitHub](https://github.com/strands-agents/agent-builder)) packages for development. The [`strands-agents-tools`](https://pypi.org/project/strands-agents-tools/) package provides many example tools that give your agents powerful abilities. The [`strands-agents-builder`](https://pypi.org/project/strands-agents-builder/) package provides an agent that helps you to build your own Strands agents and tools.
+The Strands Agents SDK additionally offers the [`strands-agents-tools`](https://pypi.org/project/strands-agents-tools/) ([GitHub](https://github.com/strands-agents/tools)) and [`strands-agents-builder`](https://pypi.org/project/strands-agents-builder/) ([GitHub](https://github.com/strands-agents/agent-builder)) packages for development. The [`strands-agents-tools`](https://pypi.org/project/strands-agents-tools/) package provides many example tools that expand your agents' capabilities. The [`strands-agents-builder`](https://pypi.org/project/strands-agents-builder/) package provides an agent that helps you to build your own Strands agents and tools.
 
 Let's install those development packages too:
 

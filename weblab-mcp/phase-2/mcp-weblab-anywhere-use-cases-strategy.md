@@ -1,9 +1,11 @@
-# MCP/AI Use Cases and Strategy - Brainstorm
+# MCP/AI Use Cases and Strategy
 
-**Owner:** Will (with support from Sergio, Doug, YJ, Arpit)  
-**Date:** October 2, 2025 (Updated Oct 9, 2025)  
+**Owner:** Aaron Gasperi (with support from Sergio, Doug, YJ, Arpit)  
+**Date:** October 10, 2025  
 **Purpose:** Input for Weblab 3YAP - Use cases and strategic direction for MCP/AI integration  
-**Status:** DRAFT - Brainstorming phase, not final
+**Deadline:** October 20, 2025
+
+**Note:** Will Poff LOA sick - Aaron Gasperi taking over primitive ownership (Oct 9, 2025)
 
 ---
 
@@ -25,13 +27,11 @@
 
 ## Purpose of This Doc
 
-Low-stakes brainstorm to identify:
+Identifies:
 - What MCP/AI capabilities Weblab needs
 - Real use cases from customers and internal teams
 - Strategic direction for next 3 years
 - Open questions and debates
-
-**Not meant to be:** Polished, complete, or independently readable outside weblab builders
 
 ---
 
@@ -170,6 +170,80 @@ Ask these 5 questions about any system claiming to be an "agent":
 - **FMA:** ASIN randomization automation (150 weblabs/year)
 - **WAE:** Multivariate experiment automation
 - **Weblab UI:** Horizonte migration needs
+
+---
+
+## How Use Cases Map to Architecture Layers
+
+Our 3-layer architecture enables different types of use cases at different complexity levels:
+
+### Layer 1 Use Cases (Phase 2 - Q1 2026: Read-Only Tools)
+
+**Simple, Direct Queries:**
+- "Get details for experiment XYZ" → `weblab_details` tool
+- "Check current allocations for experiment ABC" → `weblab_allocations` tool
+- "What changes were made to my experiment?" → `weblab_activation_history` tool
+- "Query WSTLake for experiment data" → `query_wstlake` tool
+
+**Who Uses**: Engineers, automation systems (MCM, CSM), power users calling tools directly
+
+**Characteristics**: Deterministic, fast (<2s), no LLM reasoning required
+
+### Layer 2 Use Cases (Year 2+ - 2027: Specialized Agents)
+
+**Focused Analysis Tasks:**
+
+**TAA Troubleshooting (8 Specialized Root Cause Agents)**
+- "Why is my TAA alarm firing?" → Orchestrator coordinates all 8 agents:
+  - TAA-Root-Cause-1: Checks "Weblab not published"
+  - TAA-Root-Cause-2: Checks "Insufficient allocations"
+  - TAA-Root-Cause-3: Checks "Exposure too low"
+  - ... 5 more root cause validators
+- **Reference**: https://w.amazon.com/bin/view/Weblab/Troubleshooting/Treatment_Allocation_Alarms/
+- **Agent Behavior**: Each validates ONE specific cause, returns focused insight
+
+**WLBR.ai Integration (Existing Service → Layer 2 Agent)**
+- "Analyze experiment description for clarity" → WLBR.ai text analysis
+- "Check if experiment documentation is complete" → WLBR.ai validation
+- **Positioning**: WLBR.ai becomes one of many specialized Layer 2 agents
+
+**Policy Compliance Checking**
+- "Does my experiment meet TAA requirements?" → Policy Compliance Checker
+- "Validate MCM approval before dial-up" → Automated policy validation
+- **Agent Behavior**: Calls Layer 1 tools, checks against policy rules, returns compliance status
+
+**Experiment Health Analysis**
+- "Is my experiment healthy?" → Experiment Health Analyzer
+- "Are there any red flags in my weblab?" → Multi-dimensional health check
+- **Agent Behavior**: Synthesizes data from multiple Layer 1 tools
+
+**Who Uses**: PMs, TPMs, experimenters needing focused analysis
+
+**Characteristics**: LLM-powered reasoning, single focused task, returns actionable insights
+
+### Layer 3 Use Cases (Year 2+ - 2027: Enhanced Orchestration)
+
+**Complex Multi-Step Workflows:**
+- "Find Dave's experiments with positive CP impact" → Multi-step workflow:
+  1. Query WSTLake for Dave's experiments
+  2. For each, call `weblab_details` to get metadata
+  3. Query WSTLake for CP metrics
+  4. Filter and synthesize results
+  
+- "Comprehensive TAA troubleshooting" → Orchestrated analysis:
+  1. Get experiment details
+  2. Call all 8 TAA root cause agents in parallel
+  3. Synthesize findings into actionable recommendation
+
+- "Prepare leadership report on cart experiments" → Multi-agent coordination:
+  1. Query WSTLake for cart experiments (6 months)
+  2. Call Policy Compliance Checker for each
+  3. Aggregate impact metrics
+  4. Generate formatted report
+
+**Who Uses**: Leadership, PMs needing comprehensive analysis, complex investigations
+
+**Characteristics**: Orchestrates multiple layers, natural language interface, synthesizes complex results
 
 ---
 
@@ -440,12 +514,12 @@ Ask these 5 questions about any system claiming to be an "agent":
 
 ---
 
-## Questions for Will (3YAP Consolidation)
+## Questions for Aaron/Jakub (3YAP Consolidation)
 
 1. How does this align with other primitive areas?
 2. Any conflicts with Control Plane or WSTLake visions?
 3. What level of detail do you need for all-up doc?
-4. Timeline for completing brainstorm docs?
+4. Timeline for completing brainstorm docs? **Answer: October 20, 2025**
 
 ---
 
@@ -466,6 +540,6 @@ Ask these 5 questions about any system claiming to be an "agent":
 
 ---
 
-**Document Status:** DRAFT - Brainstorm phase  
+**Document Status:** Active  
 **Next Review:** Week of October 7 with Will  
 **For:** Input to Weblab 3YAP all-up document

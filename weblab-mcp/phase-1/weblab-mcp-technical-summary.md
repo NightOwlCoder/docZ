@@ -8,7 +8,7 @@
 - **API**: Will use search service once added to weblab API proxy
 
 ### 2. `weblab_details`
-- **Purpose**: Get comprehensive experiment information  
+- **Purpose**: Get complete experiment information  
 - **API**: `GetExperiment` operation from WeblabAPIModel
 - **Input**: `experimentId`, optional `environment` (BETA/PROD)
 - **Output**: Title, objective, treatments, CTI, ownership, timestamps
@@ -48,9 +48,9 @@ Weblab Service (Tier-1)
 - **Rate Limiting**: API Gateway enforced based on key type
 - **Service Protection**: Uses public APIs, not internal UI endpoints
 
-## 📊 **Test Results**
+##  **Test Results**
 
-- **BETA Environment**: 4/4 tests passing ✅
+- **BETA Environment**: 4/4 tests passing 
 - **PROD Environment**: 5/6 tests passing (1 timeout, not functional issue)
 - **Key Success**: `weblab_activation_history` works in PROD (CR-220258045)
 - **Response Time**: Sub-2 seconds for most queries
@@ -78,7 +78,7 @@ echo '{"jsonrpc": "2.0", "method": "tools/call", "params": {"name": "weblab_deta
 - Doug Hains' production patterns
 - Full observability with OpenTelemetry
 
-### Advanced Scenarios
+### Additional Scenarios
 - Multi-agent weblab analysis workflows
 - Automated experiment health monitoring
 - Integration with deployment pipelines
@@ -94,4 +94,4 @@ echo '{"jsonrpc": "2.0", "method": "tools/call", "params": {"name": "weblab_deta
 - **Reduces bottlenecks**: No more "ask the weblab expert"
 - **Enables automation**: AI-powered weblab workflows
 - **Scales knowledge**: Weblab expertise accessible to any AI agent
-- **Future-ready**: Foundation for advanced orchestration
+- **Future-ready**: Foundation for additional orchestration

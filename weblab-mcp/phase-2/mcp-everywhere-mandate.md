@@ -2,7 +2,7 @@
 
 **Date:** October 2, 2025  
 **Source:** https://w.amazon.com/bin/view/AppliedAI/MCPEverywhere  
-**Status:** 🚨 CRITICAL - Changes our entire strategy
+**Status:** CRITICAL - Changes our entire strategy
 
 ---
 
@@ -30,7 +30,7 @@ Our initiative establishes **four core mandatory goals**:
 
 1. **Coral-native MCP Support**: Providing native support for MCP handling across Coral services
 2. **Web tool Integration**: Enabling SDO web tools to expose their business APIs as MCP tools
-3. **Remote-First Architecture**: Implementing a Remote Agent-first and Remote MCPServer-first approach for better scalability and share-ability. ⚠️
+3. **Remote-First Architecture**: Implementing a Remote Agent-first and Remote MCPServer-first approach for better scalability and share-ability.
 4. **Standardized Protocol**: Establishing MCP as the standardized protocol for AI agents
 
 ### Why Remote-First? (lines 111-113)
@@ -149,10 +149,10 @@ WeblabMCPServer (Remote)
 - Proper access controls via IAM/CloudAuth
 
 **Challenges:**
-- ⚠️ More complex than local server
-- ⚠️ Requires service hosting infrastructure
-- ⚠️ Need to implement remote auth patterns
-- ⚠️ Higher operational overhead
+- More complex than local server
+- Requires service hosting infrastructure
+- Need to implement remote auth patterns
+- Higher operational overhead
 
 ### Option 2: Hybrid (Local Proxy + Remote Server)
 
@@ -175,8 +175,8 @@ Weblab APIs
 - Still aligns with remote-first approach
 
 **Challenges:**
-- ⚠️ Two components to maintain
-- ⚠️ Added complexity
+- Two components to maintain
+- Added complexity
 
 ---
 
@@ -223,9 +223,9 @@ The wiki mentions an existing solution:
 **WSS has 125 client dependencies** (from our earlier docs) → Likely Must-Do
 
 **Impact:**
-- ⏰ If weblab is Must-Do → Q1 2026 deadline
-- 🚨 Must implement remote-first architecture
-- ⚠️ Our fork strategy needs immediate revision
+- If weblab is Must-Do → Q1 2026 deadline
+- Must implement remote-first architecture
+- Our fork strategy needs immediate revision
 
 ---
 
@@ -382,12 +382,12 @@ The wiki mentions an existing solution:
 
 ## Next Steps
 
-1. ⚠️ **URGENT:** Verify weblab Must-Do status via QuickSight
-2. 📞 **Contact MCP Everywhere team** - Get guidance on remote implementation
-3. 📚 **Research CloudAuth MCP SDK** - Understand remote auth patterns
-4. 🔍 **Investigate AmazonMCPGateway** - Check if suitable for weblab
-5. 📝 **Update strategy docs** - Revise fork approach to remote-first
-6. 👥 **Stakeholder meeting** - Present findings to Ryan/team
+1. **URGENT:** Verify weblab Must-Do status via QuickSight
+2. **Contact MCP Everywhere team** - Get guidance on remote implementation
+3. **Research CloudAuth MCP SDK** - Understand remote auth patterns
+4. **Investigate AmazonMCPGateway** - Check if suitable for weblab
+5. **Update strategy docs** - Revise fork approach to remote-first
+6. **Stakeholder meeting** - Present findings to Ryan/team
 
 **Status:** Strategy pivot required  
 **Priority:** URGENT  

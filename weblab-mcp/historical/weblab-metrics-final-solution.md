@@ -8,7 +8,7 @@
 - Any user can generate reports to show stakeholders
 - No dependency on inaccessible central account `976193224607`
 
-## 📊 How It Works
+##  How It Works
 
 ```mermaid
 graph TD

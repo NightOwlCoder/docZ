@@ -139,23 +139,23 @@
 
 ## Key Takeaways
 
-### ❌ NO MERGE PATH
+### NO MERGE PATH
 - Chetan explicitly rejects merge request
 - Recommendation: Use own server
 - amzn-mcp actively deprecating tools
 
-### ⏰ URGENT TIMELINE
+### URGENT TIMELINE
 - **Complete deprecation expected by end of October 2025**
 - No time to wait for metrics collection
 - Must proceed with fork immediately
 
-### ✅ FORK CONFIRMED
+### FORK CONFIRMED
 - Must create standalone WeblabMCPServer
 - Use golden path template (handles Midway auth)
 - Implement own metrics collection
 - Fork from amzn-mcp for auth patterns
 
-### ✅ METRICS PATH IDENTIFIED
+### METRICS PATH IDENTIFIED
 **Chetan's solution (Oct 2, 13:20 PDT):**
 - Adding CR TODAY to track metrics for existing weblab-strategy.ts
 - Will provide baseline usage data from old page-scraping strategy

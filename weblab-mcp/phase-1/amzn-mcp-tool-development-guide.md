@@ -225,7 +225,7 @@ const tools: Tool[] = [
 
 ## Step 5: Unit Testing
 
-Implement comprehensive unit tests in `test/tools/new-tool-name/tool.test.ts`:
+Implement complete unit tests in `test/tools/new-tool-name/tool.test.ts`:
 
 ```typescript
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
@@ -395,14 +395,14 @@ Explore these existing tools for reference implementations:
 
 ### Complex Tools
 - `sim_create_issue` - Complex creation operation with many parameters
-- `edit_quip` - Advanced editing with section targeting
-- `search_sable` - Sophisticated search with multiple options
+- `edit_quip` - Additional editing with section targeting
+- `search_sable` - Complex search with multiple options
 
 **Learning Approach:** A highly effective way to learn tool development is to study existing tools. Start with simple tools to understand the basic pattern, then explore more complex implementations as you gain confidence.
 
 ## Next Steps
 
-After creating your basic tool, consider these advanced enhancements:
+After creating your basic tool, consider these additional enhancements:
 - **Improve Error Handling:** Add more specific error types and messages
 - **Add Caching:** Implement caching for frequently accessed data
 - **Optimize Performance:** Refine rate limiting and connection reuse

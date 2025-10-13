@@ -107,7 +107,7 @@ The configuration auto-approves these weblab tools (no permission prompts):
 
 ## Security Notes
 
-⚠️ **Important**: This configuration contains API keys and tokens. 
+ **Important**: This configuration contains API keys and tokens. 
 
 - Never commit this file to public repositories
 - Use environment variables for sensitive values in production

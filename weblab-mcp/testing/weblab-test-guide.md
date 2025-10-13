@@ -8,7 +8,7 @@ This guide provides both **explicit tool testing** (direct tool usage) and **nat
 1. **weblab_details** - Get experiment information (working)
 2. **weblab_allocations** - Check current allocations (working) 
 3. **weblab_activation_history** - Get change history (working)
-4. ⚠️ **weblab_search** - Search experiments (returns limitation message)
+4.  **weblab_search** - Search experiments (returns limitation message)
 5. **weblab_user_experiments** - Get user's experiments via Andes SQL (NEW - working!)
 
 ## Test Environment Setup

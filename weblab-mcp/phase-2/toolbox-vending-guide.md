@@ -766,11 +766,11 @@ Recommendation: Use BOTH
 
 ### Limitations
 
-- ⚠️ Log group must be in us-east-1 (region expansion tracked in RDCT-6338)
-- ⚠️ Combined logs per invocation cannot exceed 10MB
-- ⚠️ Single log line cannot exceed 262KB
-- ⚠️ Logs sent when process exits (not streaming)
-- ⚠️ Requires infrastructure setup first (CDK or manual)
+-  Log group must be in us-east-1 (region expansion tracked in RDCT-6338)
+-  Combined logs per invocation cannot exceed 10MB
+-  Single log line cannot exceed 262KB
+-  Logs sent when process exits (not streaming)
+-  Requires infrastructure setup first (CDK or manual)
 
 ### Implementation Plan Update
 
@@ -1085,8 +1085,8 @@ Toolbox vending provides:
 - Standardized distribution
 - **Metrics and monitoring BUILT-IN** (no custom code needed!)
 - QuickSight dashboards auto-generated
-- ⚠️ Initial setup complexity (5-8 hours)
-- ⚠️ Ongoing maintenance per release (2-3 hours)
+-  Initial setup complexity (5-8 hours)
+-  Ongoing maintenance per release (2-3 hours)
 
 **CRITICAL UPDATE:** Toolbox telemetry requires setup (CDK + IAM roles) but provides professional dashboards. Your accessible-metrics.ts still valuable for development.
 

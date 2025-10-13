@@ -11,7 +11,7 @@
 We added weblab data access capabilities to AI agents and tools through 4 core MCP tools that enable:
 
 - **Experiment Search**: Find weblabs by creator, status, resolver group, etc.
-- **Experiment Details**: Get comprehensive experiment information including treatments, CTI, and ownership
+- **Experiment Details**: Get complete experiment information including treatments, CTI, and ownership
 - **Allocation Monitoring**: Check current experiment status and treatment allocations
 - **Change History**: Access experiment activation history with MCM information
 
@@ -21,8 +21,8 @@ Internal teams were increasingly using AI tools (Q CLI, Cline, etc.) for weblab 
 
 - Service Protection: Uses public weblab APIs with proper rate limiting
 - Scalable Authentication: Hybrid approach supporting individual and shared API keys
-- AI-Friendly: Native MCP integration for seamless AI agent workflows
-- Future-Ready: Extensible architecture for advanced orchestration and multi-agent systems
+- AI-Friendly: Native MCP integration for integrated AI agent workflows
+- Extensible architecture for multi-agent orchestration and multi-agent systems
 
 ## Repository Structure (Phase 1)
 

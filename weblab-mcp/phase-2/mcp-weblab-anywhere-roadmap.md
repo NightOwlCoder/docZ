@@ -1,7 +1,7 @@
 # Weblab MCP - Technical Roadmap & Architecture
 
 **Project**: Weblab MCP Integration  
-**Date**: October 2, 2025 (Updated)  
+**Date**: October 10, 2025 (Updated)  
 **Owner**: Sergio Ibagy  
 **Initiative**: MCP Everywhere CCI (Category II - Must Do)  
 **Deadline**: Q1 2026 (P0)
@@ -10,7 +10,7 @@
 
 ## Executive Summary
 
-Building MCP tools enabling LLM-powered weblab experiment management through natural language. After comprehensive investigation and stakeholder alignment, we're pivoting to a **remote-first Strands agent architecture** that meets the MCP Everywhere mandate requirements while delivering scalable, enterprise-grade weblab data access.
+Building MCP tools enabling LLM-powered weblab experiment management through natural language. After investigation and stakeholder alignment, we're pivoting to a **remote-first Strands agent architecture** that meets the MCP Everywhere mandate requirements while delivering scalable weblab data access.
 
 **Key Decision:** Skip local MCP server fork (non-compliant) and proceed directly to Phase 2 remote Strands agent deployment, which satisfies the mandatory remote-first architecture requirement.
 
@@ -40,7 +40,7 @@ Building MCP tools enabling LLM-powered weblab experiment management through nat
 - Automated dial-up workflows (with safety measures)
 - Full experiment lifecycle automation
 
-**Reference:** See [James/William Safety Thread](../../threads/james-william-mcp-safety-thread.md) for complete discussion and decision authority.
+**Reference:** See [James/William Safety Thread](../../threads/james-william-mcp-safety-thread.md) for full discussion and decision authority.
 
 ---
 
@@ -77,6 +77,43 @@ Building MCP tools enabling LLM-powered weblab experiment management through nat
 - [MCP CCI SIM](https://issues.amazon.com/P282079924)
 - [QuickSight Dashboard](https://us-east-1.quicksight.aws.amazon.com/sn/account/amazonbi/dashboards/9690506d-6bd6-4003-800c-88d25dc2a486)
 - [CCI Assessment](https://quip-amazon.com/JLUDAZv52yL7/2026-Cross-Cutting-Initiatives-MCP-Everywhere-sibagy)
+
+---
+
+## 3-Layer Architecture Vision
+
+Our architecture evolves from simple tools to a complete agent ecosystem over the next 2 years:
+
+### Layer 1: Building Blocks (MCP Tools)
+- **No LLM** - Pure API wrappers, deterministic behavior
+- **Phase 2 scope**: Read-only tools (details, allocations, history, query)
+- **Year 2+ scope**: Write tools (create experiments, dial-up automation)
+- **Called by**: Users directly OR agents
+
+### Layer 2: Specialized Agents (Year 2+ - 2027)
+- **Has LLM** - Performs ONE specific focused task
+- **Examples**:
+  - TAA Root Cause Agents (8 total) - Each validates one specific root cause
+  - WLBR.ai - Experiment text analysis (existing service integrated)
+  - Policy Compliance Checker - Automated TAA/MCM validation
+  - Experiment Health Analyzer - Performance and health metrics
+- **Behavior**: Calls Layer 1 tools, reasons about results, returns focused analysis
+- **Reference**: https://w.amazon.com/bin/view/Weblab/Troubleshooting/Treatment_Allocation_Alarms/
+
+### Layer 3: Orchestrator Agent
+- **Has LLM** - Coordinates multiple layers based on query complexity
+- **Phase 2**: Basic orchestration (calls Layer 1 tools only, direct MCP access)
+- **Year 2+**: Enhanced orchestration (coordinates Layer 1 + Layer 2 agents)
+- **Behavior**: Natural language interface, multi-step workflows, synthesizes results
+
+### Architecture Flexibility
+
+This is NOT a rigid hierarchy - it's a flexible mesh where:
+- **Users** can call ANY layer directly based on their needs
+- **Layer 3** dynamically chooses to call Layer 2 agents OR Layer 1 tools
+- **Layer 2** agents always call Layer 1 tools for data access
+
+**See:** [Technical Vision](mcp-weblab-anywhere-technical-vision.md) for complete architecture diagrams showing the evolution from current state → Phase 2 foundation → Year 2+ complete ecosystem.
 
 ---
 
@@ -120,7 +157,7 @@ WeblabStrandsAgent (Lambda/Fargate - REMOTE!)
 - **Scalable** - Lambda auto-scaling, shared infrastructure
 - **MCP native** - Strands has built-in MCP support (MCPClient)
 - **Can BE an MCP server** - Expose agent as MCP endpoint
-- **Production-ready** - OpenTelemetry, CloudWatch metrics
+- **Tested observability** - OpenTelemetry, CloudWatch metrics
 - **Reuses Phase 1 work** - 6 tools, API patterns, authentication
 
 ---
@@ -140,7 +177,6 @@ WeblabStrandsAgent (Lambda/Fargate - REMOTE!)
 **Technical Achievements:**
 - Dual authentication (Midway + Weblab API keys)
 - Public WeblabAPIModel APIs (no page scraping)
-- Comprehensive test suite (2179 tests passing)
 - BETA and PROD environment support
 - Andes integration via HTTP bridge
 
@@ -150,7 +186,7 @@ WeblabStrandsAgent (Lambda/Fargate - REMOTE!)
 - Tool schemas and parameter validation
 - Integration with andes-mcp for SQL queries
 
-### 🚧 In-Flight Work
+### In-Flight Work
 
 **Metrics Implementation:**
 - `accessible-metrics.ts` - Local file + CloudWatch (your account 975049930647)
@@ -173,7 +209,7 @@ WeblabStrandsAgent (Lambda/Fargate - REMOTE!)
 - [x] Build 6 weblab MCP tools
 - [x] Validate APIs with Keith Norman
 - [x] Test with Q CLI and Cline
-- [x] Comprehensive test coverage
+- [x] Complete test coverage
 - [x] Document patterns and learnings
 
 ### Phase 2: Remote Strands Agent (Current Focus)
@@ -269,10 +305,9 @@ WeblabStrandsAgent (Lambda/Fargate - REMOTE!)
   - Scheduled (periodic analysis)
 
 **Authentication:**
-- CloudAuth for service identity
-- Transitive Auth for user delegation
+- CloudAuth for service identity and caller verification
 - IAM roles with proper trust relationships
-- Support for both agent-as-service and agent-on-behalf-of-user patterns
+- Standard AWS authentication patterns
 
 **MCP Integration:**
 ```python
@@ -368,7 +403,7 @@ def analyze_weblab(experiment_id: str) -> dict:
 - [ ] 99% uptime SLA
 
 **Compliance:**
-- [ ] Remote-first architecture ✅
+- [ ] Remote-first architecture 
 - [ ] MCP Everywhere program reporting
 - [ ] Security certification complete
 - [ ] Documentation audit passed
@@ -377,7 +412,7 @@ def analyze_weblab(experiment_id: str) -> dict:
 
 **Enhanced Functionality:**
 - [ ] Integration with modernized WSS (if available)
-- [ ] Advanced orchestration workflows
+- [ ] Additional orchestration workflows
 - [ ] Multi-agent collaboration patterns
 - [ ] WLBR.AI integration
 
@@ -401,10 +436,10 @@ def analyze_weblab(experiment_id: str) -> dict:
 - Doug's reference architecture available
 
 **Trade-offs:**
-- ⬆️ Increased complexity (service hosting vs local binary)
-- ⬆️ Operational overhead (monitoring, deployment)
-- ⬇️ Time to first deployment (no fork/cleanup needed)
-- ⬇️ Long-term maintenance (standard service vs custom fork)
+-  Increased complexity (service hosting vs local binary)
+-  Operational overhead (monitoring, deployment)
+-  Time to first deployment (no fork/cleanup needed)
+-  Long-term maintenance (standard service vs custom fork)
 
 **Confidence:** 95% - Right architectural choice
 
@@ -418,9 +453,9 @@ def analyze_weblab(experiment_id: str) -> dict:
 - AWS internal adoption (Q CLI, Glue, etc.)
 
 **Trade-offs:**
-- ⬆️ Language switch (TS → Python)
-- ⬇️ Complexity (agent frameworks vs custom code)
-- ⬇️ Observability effort (built-in vs custom)
+-  Language switch (TS → Python)
+-  Complexity (agent frameworks vs custom code)
+-  Observability effort (built-in vs custom)
 
 **Confidence:** 90% - Proven production patterns
 
@@ -541,7 +576,7 @@ StrandsTelemetry().setup_console_exporter().setup_otlp_exporter()
 # Define weblab tools as Strands tools
 @tool
 def weblab_details(experiment_id: str, environment: str = "BETA") -> dict:
-    """Get comprehensive weblab experiment details"""
+    """Get weblab experiment details"""
     # Reuse Phase 1 API logic
     return call_weblab_api("GetExperiment", {...})
 
@@ -643,10 +678,6 @@ agent = Agent(
 - Direct API calls to Weblab APIs
 - Standard IAM permissions
 
-**User Delegation (Agent on Behalf of User):**
-- Transitive Auth token from user
-- Agent passes TA token downstream
-- Preserves user identity for audit
 
 **Weblab API Keys:**
 - BYOK support maintained
@@ -778,7 +809,7 @@ async def analyze_experiment(experiment_id: str) -> dict:
 
 ## Risk Assessment (Updated)
 
-### Critical Risk: Wrong Architecture (RESOLVED ✅)
+### Critical Risk: Wrong Architecture (RESOLVED )
 
 **Previous State:** Planning local fork that violates mandate  
 **Current State:** Remote Strands agent aligns with mandate  
@@ -914,11 +945,10 @@ async def analyze_experiment(experiment_id: str) -> dict:
 4. Do we need security review before starting development? **ANSWERED: Staged, can start dev first (Michael meeting)**
 
 ### Important (Need Answers This Month)
-5. Transitive Auth implementation - any examples?
-6. MCP Registry registration - what's the process?
-7. Hosting costs - Lambda vs Fargate comparison?
-8. Redshift vs Athena - final decision and cost comparison
-9. Kevin Cruse engagement - Get CDK patterns and WSTLake guidance
+5. MCP Registry registration - what's the process?
+6. Hosting costs - Lambda vs Fargate comparison?
+7. Redshift vs Athena - final decision and cost comparison
+8. Kevin Cruse engagement - Get CDK patterns and WSTLake guidance
 
 ### Nice to Have (Can Defer)
 11. Integration with WLBR.AI timeline?
@@ -960,22 +990,22 @@ async def analyze_experiment(experiment_id: str) -> dict:
 - [Security Guidance](https://w.amazon.com/bin/view/Dev.CDO/UnifiedAuth/Fabric/Securing_AI_Workflows_in_SDO_Using_CloudAuth/)
 
 ### Project Documentation
-- [Restart Package](docs/weblab-mcp/restart-package-2025-10-02.md) - Project snapshot
-- [MCP Mandate Analysis](docs/weblab-mcp/mcp-everywhere-mandate.md) - Remote-first requirements
-- [Phase 2 Plan](docs/phase-2/phase-2-strands-implementation-plan.md) - Strands implementation
-- [Chetan Thread](docs/threads/chetan-amzn-mcp-thread.md) - Decision history
+- [Restart Package](restart-package-2025-10-02.md) - Project snapshot
+- [MCP Mandate Analysis](mcp-everywhere-mandate.md) - Remote-first requirements
+- [Phase 2 Plan](phase-2-strands-implementation-plan.md) - Strands implementation
+- [Chetan Thread](../threads/chetan-amzn-mcp-thread.md) - Decision history
 
 ### Meeting Notes (October 2, 2025)
-- [Ryan Meeting](docs/weblab-mcp/weblab-mcp-meetings/ryan-10-02.md) - MCP strategy, use case collection
-- [Michael Meeting](docs/weblab-mcp/weblab-mcp-meetings/michael-10-02.md) - Infrastructure, security review
-- [YJ Meeting](docs/weblab-mcp/weblab-mcp-meetings/yj-10-02.md) - Data access, Athena vs Redshift
+- [Ryan Meeting](../weblab-mcp-meetings/ryan-10-02.md) - MCP strategy, use case collection
+- [Michael Meeting](../weblab-mcp-meetings/michael-10-02.md) - Infrastructure, security review
+- [YJ Meeting](../weblab-mcp-meetings/yj-10-02.md) - Data access, Athena vs Redshift
 
 ### Code References
-- [WeblabLearningAppBackendPython](WeblabLearningAppBackendPython/) - Doug's agent patterns
-- [WeblabLearningAppBackendCDK](WeblabLearningAppBackendCDK/) - Deployment infrastructure
-- [Strands MCP Investigation](docs/weblab-mcp/llm-mcp-strands-investigation.md) - Strands capabilities
+- [WeblabLearningAppBackendPython](../../WeblabLearningAppBackendPython/) - Doug's agent patterns
+- [WeblabLearningAppBackendCDK](../../WeblabLearningAppBackendCDK/) - Deployment infrastructure
+- [Strands MCP Investigation](../historical/llm-mcp-strands-investigation.md) - Strands capabilities
 - [AndesClientPython](https://code.amazon.com/packages/AndesClientPython) - Python SDK for Andes API access
-- [Andes Integration Guide](docs/weblab-mcp/historical/andes-integration.md) - Comprehensive Andes MCP integration findings
+- [Andes Integration Guide](../historical/andes-integration.md) - Complete Andes MCP integration findings
 
 ### Andes Data Access
 - [Andes API Hub](https://datacentral.a2z.com/api-hub/andes) - Unified Andes API documentation
@@ -985,7 +1015,7 @@ async def analyze_experiment(experiment_id: str) -> dict:
 
 ### External Tools & References
 - [Beta NL Query UI](https://beta.console.harmony.a2z.com/weblab-data-management/wstlake-query) - Existing natural language interface
-- [Kevin's Complex Query Example](docs/weblab-mcp/weblab-mcp-meetings/yj-10-02.md) - 3-day SQL formulation showing AI value
+- [Kevin's Complex Query Example](../weblab-mcp-meetings/yj-10-02.md) - 3-day SQL formulation showing AI value
 - [Andi Demo (Broadcast)](https://broadcast.amazon.com/videos/1635983) - BDT's NL-to-SQL tool demo (July 2025)
 
 ### Support Channels
@@ -997,14 +1027,14 @@ async def analyze_experiment(experiment_id: str) -> dict:
 
 ## Conclusion
 
-The discovery of the MCP Everywhere remote-first mandate clarifies our path forward: **build a remote Strands agent that satisfies CCI requirements while delivering enterprise-grade weblab data access**.
+The discovery of the MCP Everywhere remote-first mandate clarifies our path forward: **build a remote Strands agent that satisfies CCI requirements while delivering production-ready weblab data access**.
 
 This approach:
 - Meets mandatory CCI compliance
 - Leverages proven production patterns (Doug's work)
 - Reuses Phase 1 investment (6 tools, APIs, tests)
 - Provides scalable, shareable solution
-- Sets foundation for advanced workflows
+- Sets foundation for additional workflows
 
 Success requires focus and discipline to meet Q1 2026 deadline, but the architecture is validated and the technical path is clear.
 

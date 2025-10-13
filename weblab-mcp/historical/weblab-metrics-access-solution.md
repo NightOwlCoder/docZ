@@ -1,6 +1,6 @@
 # Weblab MCP Metrics Access Solution
 
-## 🚨 The Real Problem
+##  The Real Problem
 
 **Issue:** Current metrics implementation sends data to AWS account `976193224607` (`AmznMCPMonitoringRole`) but users can't access this account.
 
@@ -111,7 +111,7 @@ export class AccessibleMetricsCollector {
 }
 ```
 
-## 📊 What This Gives You RIGHT NOW
+##  What This Gives You RIGHT NOW
 
 **Immediate answers to stakeholder questions:**
 
@@ -137,13 +137,13 @@ cat ~/.weblab-mcp/usage-metrics.json | jq 'map(select(.timestamp > "2024-09-26")
 **Metrics Storage:** Local file + Optional CloudWatch
 **Your Account:** 123456789012 (detected)
 
-## 📊 Usage Summary (Last 7 Days)
+##  Usage Summary (Last 7 Days)
 - **Unique Users:** 8 users
 - **Total Queries:** 156 calls
 - **Success Rate:** 94.2%  
 - **Most Popular:** weblab_details (67 calls)
 
-## 🔍 Detailed Breakdown
+##  Detailed Breakdown
 Tool Usage:
 - weblab_details: 67 calls (42.9%)
 - weblab_allocations: 34 calls (21.8%) 

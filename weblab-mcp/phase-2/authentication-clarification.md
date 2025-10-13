@@ -8,7 +8,7 @@
 ### andes-mcp Authentication (What we use)
 - **Method**: Standard Midway authentication (automatic)
 - **Required Setup**: NONE - just have andes-mcp server installed
-- **AWS_PROFILE**: NOT NEEDED ❌
+- **AWS_PROFILE**: NOT NEEDED 
 - **ada profile**: NOT NEEDED  
 - **How it works**: andes-mcp handles auth internally through Midway
 
@@ -19,7 +19,7 @@
 - **ada profile**: REQUIRED (IibsAdminAccess-DO-NOT-DELETE role)
 - **Used by**: `weblab-andes-query.sh` shell script only
 
-## 📊 Quick Reference
+##  Quick Reference
 
 | Tool/Method | Needs AWS_PROFILE? | Needs ada? | Authentication |
 |-------------|-------------------|------------|----------------|
@@ -71,7 +71,7 @@ return {
 };
 ```
 
-## 📝 Summary
+##  Summary
 
 The prompt you're looking at mixes two different authentication contexts:
 

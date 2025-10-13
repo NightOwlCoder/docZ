@@ -171,7 +171,7 @@ Don't skip steps! The workflow is:
 6. execute_query
 7. get_query_result_url
 
-## 📊 Proven Working Queries
+##  Proven Working Queries
 
 ### Get Recent Experiments
 ```sql
@@ -207,7 +207,7 @@ ORDER BY ordinal_position;
 | **wla_experiments** | `"weblab"."waba"."wla_experiments"` | Analytics view |
 | **wla_launch_decisions** | `"weblab"."waba"."wla_launch_decisions"` | Decision tracking |
 
-## 🔍 Schema Guide
+##  Schema Guide
 
 **Database**: `Wstlake` (ID: `0b41fd5a-a113-442a-a6e7-6158506a204a`)  
 **Catalogs**: `weblab`, `dev`  
@@ -240,7 +240,7 @@ When you successfully run the queries, you'll see data like:
 ### Problem: Query fails with syntax error
 **Solution**: Use simpler SQL first, then add complexity. Remove semicolons if present.
 
-## 🚀 Advanced Capabilities  
+##  Advanced Capabilities  
 
 Once you master the basics, you can:
 
@@ -264,7 +264,7 @@ FROM "weblab"."wst"."weblab_metadata"
 WHERE created >= '2025-09-01';
 ```
 
-## 💡 Pro Tips for Claude Instances
+##  Pro Tips for Claude Instances
 
 1. **Always call LoadAndesContext first** - This activates specialized Andes expertise
 2. **Save connection IDs** - You'll need them for multiple queries

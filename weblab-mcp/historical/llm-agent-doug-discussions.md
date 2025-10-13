@@ -106,7 +106,7 @@ graph TD
 4. **Validation Critical:** Determinism requires AR/validation layer
 5. **Phased Approach:** Start with MCP, add orchestration as needed
 
-## 📚 References
+##  References
 
 - **GenAI Power Users:** [weblab-reviewer script](https://code.amazon.com/packages/AmazonBuilderGenAIPowerUsersQContext/blobs/mainline/--/scripts/weblab-reviewer.script.md)
 - **Workflow Examples:** [Cline bot workflows](https://docs.cline.bot/features/slash-commands/workflows#real-world-example)

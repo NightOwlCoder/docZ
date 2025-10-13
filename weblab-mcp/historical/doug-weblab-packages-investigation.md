@@ -31,7 +31,7 @@ Doug has created multiple packages for Weblab, but only one actually accesses We
 - Session Management: S3-based conversation persistence
 - Observability: OpenTelemetry instrumentation
 
-### 2. HarmonyWeblabClient-JS - The Actual Data Access Client ✅
+### 2. HarmonyWeblabClient-JS - The Actual Data Access Client 
 
 **Purpose**: JavaScript client library for accessing Weblab data from Harmony UI
 

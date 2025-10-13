@@ -20,7 +20,7 @@ Weblab MCP is part of the broader **MCP Everywhere** initiative (Category II CCI
 
 ## Investigation Findings
 
-### 1. Andes/Subscription Model Analysis ❌
+### 1. Andes/Subscription Model Analysis 
 
 #### What We Discovered
 The Andes permission model requires a two-step process that doesn't scale for regular users:
@@ -43,7 +43,7 @@ you also need CreateSubscription to a Redshift cluster"
 
 **Verdict**: The subscription model is designed for teams copying data to their own infrastructure, not for individual users querying existing data.
 
-### 2. DataCentral Workbench Analysis ❌
+### 2. DataCentral Workbench Analysis 
 
 #### Current State
 - **Database**: Wstlake (ID: `0b41fd5a-a113-442a-a6e7-6158506a204a`)
@@ -62,7 +62,7 @@ you also need CreateSubscription to a Redshift cluster"
 
 **Verdict**: Only viable for Weblab team members with existing infrastructure access.
 
-### 3. Athena Approach Analysis ❌
+### 3. Athena Approach Analysis 
 
 Source: [Athena Access Script](docs/case-studies/weblab-data-through-athena/)
 
@@ -81,7 +81,7 @@ Source: [Athena Access Script](docs/case-studies/weblab-data-through-athena/)
 
 **Verdict**: The Athena approach is just another way to access the same restricted infrastructure.
 
-### 4. WeblabSearchService (WSS) Discovery ✅
+### 4. WeblabSearchService (WSS) Discovery 
 
 Source: [WSS Thread with Livia Stanley and Steven Guo](docs/threads/livia-steven-wss-thread.md)
 

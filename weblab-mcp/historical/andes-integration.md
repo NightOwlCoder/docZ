@@ -598,7 +598,7 @@ For integrated Weblab-to-Andes access, we have a working HTTP bridge solution:
 
 **Current Capabilities**:
 - Works for Weblab team members (uses `weblab_ro` user)
-- ⚠️ Non-team members need CreateAccessRequest (to be implemented)
+-  Non-team members need CreateAccessRequest (to be implemented)
 
 ### Testing Commands
 

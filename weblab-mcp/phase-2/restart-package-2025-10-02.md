@@ -42,13 +42,13 @@
 * `weblab_request_andes_access` → Auto-approved WEBLAB_DDL access
 * Test suite: `test/tools/weblab/tools.test.ts` (PASSING)
 
-### 🚧 In-Flight
+### In-Flight
 
 * `accessible-metrics.ts` → Started, basic structure exists
 * `weblab-health-check.ts` → Drafted, not tested
 * TypeScript compilation status: **unverified**
 
-### 🐛 Known Issues
+### Known Issues
 
 * TypeScript errors mentioned in golden path doc (line 12, 104) – **not verified if real**
 * `metrics.test.ts` may use wrong framework (vitest vs jest) – **not verified**
@@ -171,9 +171,9 @@ if (metricsDir) {
 ### Blockers
 
 * ~~Waiting on Chetan response~~ **RESOLVED: Fork confirmed, merge rejected (10/02/2025)**
-* ⏰ **URGENT: amzn-mcp deprecation by end of October 2025**
-* ⚠️ TypeScript errors unverified
-* ⚠️ Andes permissions deferred
+*  **URGENT: amzn-mcp deprecation by end of October 2025**
+*  TypeScript errors unverified
+*  Andes permissions deferred
 * ~~Metrics clarification~~ **RESOLVED: Baseline data from old strategy, available Oct 11**
 
 ---

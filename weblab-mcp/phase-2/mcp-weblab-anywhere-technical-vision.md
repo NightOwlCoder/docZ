@@ -1,9 +1,9 @@
-# MCP/AI Technical Vision - Brainstorm
+# MCP/AI Technical Vision
 
 **Owner:** Sergio Ibagy (with support from Doug, YJ, Arpit)  
-**Date:** October 2, 2025 (Updated Oct 9, 2025)  
+**Date:** October 10, 2025  
 **Purpose:** Input for Weblab 3YAP - Technical architecture and implementation approach for MCP/AI  
-**Status:** DRAFT - Brainstorming phase, not final
+**Deadline:** October 20, 2025
 
 ---
 
@@ -28,18 +28,17 @@
 
 **Reference:** [James/William Safety Thread](../../threads/james-william-mcp-safety-thread.md)
 
+
 ---
 
 ## Purpose of This Doc
 
-Technical brainstorm covering:
+Technical architecture covering:
 - Current architecture and what we've built
 - Problems with original approach
 - Proposed solutions and trade-offs
 - 3-year technical evolution
 - Open technical debates
-
-**Not meant to be:** Polished, buttoned-up, or ready for external review
 
 ---
 
@@ -84,7 +83,7 @@ Weblab MCP Tools (TypeScript)
 
 ---
 
-## Problems / Themes
+## Problems and Issues
 
 ### Problem 1: Local Fork Violates MCP Everywhere Mandate
 
@@ -112,7 +111,7 @@ Weblab MCP Tools (TypeScript)
 - No centralized rate limiting or metrics
 - Each user needs local setup
 
-**Enterprise needs:**
+**Production needs:**
 - Shared infrastructure
 - Consistent behavior across users
 - Centralized monitoring and control
@@ -379,6 +378,520 @@ result = andes_tools.call('DataCentralWorkbench', {
 
 ---
 
+## 3-Layer Agent Architecture Vision
+
+### Architecture Overview
+
+Our vision builds on a modular 3-layer architecture that evolves from simple tools to a complete agent ecosystem:
+
+**Layer 1: Building Blocks**
+- MCP tools with no LLM
+- Pure API wrappers (deterministic)
+- Called by users OR agents
+
+**Layer 2: Specialized Agents**
+- Has LLM, performs ONE specific task
+- Calls layer 1 tools, reasons about results
+- Returns focused analysis
+
+**Layer 3: Orchestrator Agents**
+- Has LLM, coordinates multiple layers
+- Natural language interface
+- Synthesizes results from multiple sources
+
+### Current State (Today)
+
+<svg width="1200" height="650" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f8f9fa; border-radius: 10px; padding: 20px; display: block; margin: 20px auto;">
+  
+  <defs>
+    <marker id="arrowBlack" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2c3e50"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#95a5a6"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <rect x="50" y="20" width="1100" height="50" fill="#2c3e50" rx="8"/>
+  <text x="600" y="52" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">No AI Integration Today</text>
+  
+  <!-- Blocked AI Tools (Red - No Access) -->
+  <rect x="100" y="110" width="180" height="80" fill="#c0392b" stroke="#7b241c" stroke-width="3" rx="8"/>
+  <text x="190" y="140" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">Amazon Q CLI</text>
+  <text x="190" y="165" font-size="13" fill="#fff" text-anchor="middle">❌ No weblab access</text>
+  
+  <rect x="320" y="110" width="180" height="80" fill="#c0392b" stroke="#7b241c" stroke-width="3" rx="8"/>
+  <text x="410" y="140" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">Cline/Cursor</text>
+  <text x="410" y="165" font-size="13" fill="#fff" text-anchor="middle">❌ No weblab access</text>
+  
+  <!-- Manual Workflows (Blue - Only way to access) -->
+  <rect x="100" y="250" width="200" height="90" fill="#2980b9" stroke="#1a5490" stroke-width="2" rx="8"/>
+  <text x="200" y="285" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">Manual Workflows</text>
+  <text x="200" y="310" font-size="12" fill="#fff" text-anchor="middle">Engineers/PMs</text>
+  
+  <!-- Arrows from Manual to Services -->
+  <line x1="300" y1="295" x2="580" y2="250" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowBlack)"/>
+  <line x1="300" y1="295" x2="580" y2="380" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowBlack)"/>
+  <line x1="300" y1="295" x2="580" y2="510" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowBlack)"/>
+  
+  <!-- Isolated WLBR.ai (Purple - Exists but not integrated) -->
+  <rect x="100" y="410" width="180" height="90" fill="#8e44ad" stroke="#6c3483" stroke-width="2" rx="8"/>
+  <text x="190" y="445" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">WLBR.ai</text>
+  <text x="190" y="470" font-size="12" fill="#fff" text-anchor="middle">Text Analysis</text>
+  <text x="190" y="490" font-size="11" fill="#fff" text-anchor="middle">Isolated</text>
+  
+  <!-- Dashed arrow: WLBR isolated connection -->
+  <line x1="280" y1="455" x2="580" y2="380" stroke="#95a5a6" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrowDashed)"/>
+  
+  <!-- Services (Right side) -->
+  <rect x="580" y="200" width="220" height="100" fill="#34495e" stroke="#2c3e50" stroke-width="2" rx="8"/>
+  <text x="690" y="235" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">WeblabSearchService</text>
+  <text x="690" y="260" font-size="12" fill="#fff" text-anchor="middle">125 clients</text>
+  <text x="690" y="280" font-size="11" fill="#fff" text-anchor="middle">Limited functionality</text>
+  
+  <rect x="580" y="330" width="220" height="100" fill="#34495e" stroke="#2c3e50" stroke-width="2" rx="8"/>
+  <text x="690" y="365" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">Weblab APIs</text>
+  <text x="690" y="390" font-size="12" fill="#fff" text-anchor="middle">GetExperiment, etc.</text>
+  <text x="690" y="410" font-size="11" fill="#fff" text-anchor="middle">Manual use only</text>
+  
+  <rect x="580" y="460" width="220" height="100" fill="#34495e" stroke="#2c3e50" stroke-width="2" rx="8"/>
+  <text x="690" y="495" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">WSTLake Data</text>
+  <text x="690" y="520" font-size="12" fill="#fff" text-anchor="middle">Andes/Redshift</text>
+  <text x="690" y="540" font-size="11" fill="#fff" text-anchor="middle">Manual SQL only</text>
+  
+  <!-- Problems Box -->
+  <rect x="850" y="200" width="300" height="200" fill="#fff3cd" stroke="#ffc107" stroke-width="2" rx="6"/>
+  <text x="1000" y="225" font-size="14" font-weight="bold" fill="#856404" text-anchor="middle">Problems Today:</text>
+  <text x="870" y="255" font-size="12" fill="#856404">❌ Q CLI can't access weblab</text>
+  <text x="870" y="280" font-size="12" fill="#856404">❌ AI tools isolated</text>
+  <text x="870" y="305" font-size="12" fill="#856404">❌ Manual workflows only</text>
+  <text x="870" y="340" font-size="12" font-weight="bold" fill="#856404">Phase 1 Goal:</text>
+  <text x="870" y="365" font-size="12" fill="#856404">✓ Enable AI access to weblab</text>
+  
+</svg>
+
+**Problems:**
+- **No AI integration**: Q CLI, Cline can't access weblab data
+- **WLBR.ai isolated**: Exists but not integrated with broader ecosystem
+- **Manual everything**: Engineers write SQL, call APIs manually
+- **No coherent architecture**: Tools scattered, not composable
+- **Phase 1 was supposed to fix this**: Enable Q CLI access via MCP
+
+---
+
+### Phase 2 (Q1 2026) - Foundation
+
+<svg width="950" height="600" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f8f9fa; border-radius: 10px; padding: 20px; display: block; margin: 20px auto;">
+  
+  <defs>
+    <marker id="arrowP2Blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2980b9"/>
+    </marker>
+    <marker id="arrowP2Gray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#5d6d7e"/>
+    </marker>
+  </defs>
+  
+  <!-- USER INTERFACES -->
+  <rect x="50" y="20" width="800" height="80" fill="#f8f9fa" stroke="#1a1a1a" stroke-width="3" rx="8"/>
+  <text x="70" y="45" font-size="14" font-weight="bold" fill="#1a1a1a">⦿ USER INTERFACES</text>
+  
+  <rect x="80" y="55" width="100" height="35" fill="#34495e" rx="6"/>
+  <text x="130" y="77" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">Q CLI</text>
+  
+  <rect x="195" y="55" width="100" height="35" fill="#34495e" rx="6"/>
+  <text x="245" y="77" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">Cline</text>
+  
+  <rect x="310" y="55" width="130" height="35" fill="#34495e" rx="6"/>
+  <text x="375" y="77" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">Custom Apps</text>
+  
+  <rect x="455" y="55" width="80" height="35" fill="#34495e" rx="6"/>
+  <text x="495" y="77" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">MCM</text>
+  
+  <rect x="550" y="55" width="80" height="35" fill="#34495e" rx="6"/>
+  <text x="590" y="77" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">CSM</text>
+  
+  <rect x="645" y="55" width="180" height="35" fill="#34495e" rx="6"/>
+  <text x="735" y="77" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">... etc (automation)</text>
+  
+  <!-- ONE ARROW from UI center to Layer 1 -->
+  <line x1="450" y1="100" x2="450" y2="180" stroke="#2980b9" stroke-width="4" marker-end="url(#arrowP2Blue)"/>
+  
+  <!-- LAYER 1: Read Tools -->
+  <rect x="200" y="180" width="500" height="160" fill="#f8f9fa" stroke="#2980b9" stroke-width="3" rx="8"/>
+  <text x="220" y="205" font-size="14" font-weight="bold" fill="#2980b9">⦿ LAYER 1: Read Tools (MCP)</text>
+  
+  <rect x="230" y="225" width="140" height="45" fill="#5dade2" stroke="#2980b9" stroke-width="2" rx="6"/>
+  <text x="300" y="252" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">weblab_details</text>
+  
+  <rect x="390" y="225" width="160" height="45" fill="#5dade2" stroke="#2980b9" stroke-width="2" rx="6"/>
+  <text x="470" y="252" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">weblab_allocations</text>
+  
+  <rect x="230" y="285" width="210" height="45" fill="#5dade2" stroke="#2980b9" stroke-width="2" rx="6"/>
+  <text x="335" y="312" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">weblab_activation_history</text>
+  
+  <rect x="460" y="285" width="140" height="45" fill="#5dade2" stroke="#2980b9" stroke-width="2" rx="6"/>
+  <text x="530" y="312" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">query_wstlake</text>
+  
+  <!-- ONE ARROW from Layer 1 center to Data Sources -->
+  <line x1="450" y1="340" x2="450" y2="400" stroke="#5d6d7e" stroke-width="4" marker-end="url(#arrowP2Gray)"/>
+  
+  <!-- DATA SOURCES -->
+  <rect x="250" y="400" width="400" height="130" fill="#f8f9fa" stroke="#2c3e50" stroke-width="3" rx="8"/>
+  <text x="270" y="425" font-size="14" font-weight="bold" fill="#2c3e50">⦿ DATA SOURCES</text>
+  
+  <rect x="280" y="450" width="150" height="60" fill="#5d6d7e" stroke="#2c3e50" stroke-width="2" rx="8"/>
+  <text x="355" y="475" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle">Weblab APIs</text>
+  <text x="355" y="497" font-size="12" fill="#fff" text-anchor="middle">(WeblabAPIModel)</text>
+  
+  <rect x="470" y="450" width="150" height="60" fill="#5d6d7e" stroke="#2c3e50" stroke-width="2" rx="8"/>
+  <text x="545" y="475" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle">WSTLake Data</text>
+  <text x="545" y="497" font-size="12" fill="#fff" text-anchor="middle">(Andes/Redshift)</text>
+  
+  <!-- Legend Box (Bottom right, aligned with DATA SOURCES bottom) -->
+  <rect x="670" y="410" width="210" height="120" fill="#fff" stroke="#95a5a6" stroke-width="2" rx="6"/>
+  <text x="775" y="435" font-size="13" font-weight="bold" fill="#000" text-anchor="middle">Connection Types</text>
+  
+  <line x1="690" y1="465" x2="740" y2="465" stroke="#2980b9" stroke-width="4" marker-end="url(#arrowP2Blue)"/>
+  <text x="750" y="470" font-size="11" fill="#000">Tool Call (Read)</text>
+  
+  <line x1="690" y1="500" x2="740" y2="500" stroke="#5d6d7e" stroke-width="4" marker-end="url(#arrowP2Gray)"/>
+  <text x="750" y="505" font-size="11" fill="#000">Data Access</text>
+  
+</svg>
+
+**Phase 2 Scope:**
+
+**✓ What's Included:**
+- Layer 1 read tools only (4 tools: details, allocations, history, query)
+- Direct MCP Protocol access for AI interfaces
+- Remote-first compliant (MCP Everywhere mandate)
+- Read-only safety (protects tier-1 control plane)
+
+**❌ Not Yet (Year 2+):**
+- Layer 2 specialized agents (WLBR.ai integration, TAA analyzers)
+- Layer 3 orchestrator agent (multi-step workflows)
+- Write tools (create/modify experiments, dial-up automation)
+
+**Phase 2 Characteristics:**
+- **Layer 1 ONLY**: No orchestrator agent (no layer 3 yet)
+- **Direct tool access**: Q CLI and Cline call tools directly via MCP
+- **Remote MCP tools**: Each tool is a remote MCP server (compliant)
+- **Read-only safety**: No write operations yet
+- **Users do orchestration**: Q's LLM decides which tools to use
+
+---
+
+### Year 2+ (2027-2028) - Complete Ecosystem
+
+<svg width="1450" height="1400" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f8f9fa; border-radius: 10px; padding: 20px; display: block; margin: 20px auto;">
+  
+  <!-- Define arrow markers -->
+  <defs>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#27ae60"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#8e44ad"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2980b9"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#5d6d7e"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#f39c12"/>
+    </marker>
+  </defs>
+  
+  <!-- ========================================== -->
+  <!-- ARROWS FIRST (Behind everything else) -->
+  <!-- ========================================== -->
+  
+  <!-- From User Interfaces bottom edge -->
+  <line x1="575" y1="120" x2="575" y2="180" stroke="#27ae60" stroke-width="4" marker-end="url(#arrowGreen)"/>
+  <line x1="700" y1="120" x2="700" y2="420" stroke="#8e44ad" stroke-width="3.5" marker-end="url(#arrowPurple)"/>
+  <line x1="180" y1="120" x2="180" y2="680" stroke="#2980b9" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <line x1="1050" y1="120" x2="1050" y2="680" stroke="#e74c3c" stroke-width="3" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  
+  <!-- From Layer 3 -->
+  <line x1="700" y1="360" x2="700" y2="420" stroke="#8e44ad" stroke-width="3.5" marker-end="url(#arrowPurple)"/>
+  <line x1="400" y1="360" x2="300" y2="680" stroke="#2980b9" stroke-width="3" stroke-dasharray="8,4" marker-end="url(#arrowBlue)"/>
+  <line x1="750" y1="360" x2="950" y2="680" stroke="#e74c3c" stroke-width="3" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  
+  <!-- From Layer 2 container to Layer 1 containers -->
+  <line x1="450" y1="600" x2="450" y2="680" stroke="#2980b9" stroke-width="3.5" marker-end="url(#arrowBlue)"/>
+  <line x1="1000" y1="600" x2="1000" y2="680" stroke="#e74c3c" stroke-width="3" stroke-dasharray="8,4" marker-end="url(#arrowRed)"/>
+  
+  <!-- From Layer 1 to Data Sources (moved further down for gentler angles) -->
+  <line x1="375" y1="910" x2="640" y2="1070" stroke="#5d6d7e" stroke-width="3.5" marker-end="url(#arrowGray)"/>
+  <line x1="950" y1="910" x2="760" y2="1070" stroke="#5d6d7e" stroke-width="3.5" marker-end="url(#arrowGray)"/>
+  
+  <!-- ========================================== -->
+  <!-- CONTAINERS AND CONTENT (On top of arrows) -->
+  <!-- ========================================== -->
+  
+  <!-- USER INTERFACES Container -->
+  <rect x="50" y="20" width="1050" height="100" fill="#f8f9fa" stroke="#1a1a1a" stroke-width="3" rx="8"/>
+  <text x="70" y="45" font-size="14" font-weight="bold" fill="#1a1a1a">⦿ USER INTERFACES</text>
+  
+  <rect x="70" y="55" width="110" height="45" fill="#34495e" rx="6"/>
+  <text x="125" y="82" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">Q CLI</text>
+  
+  <rect x="200" y="55" width="110" height="45" fill="#34495e" rx="6"/>
+  <text x="255" y="82" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">Cline</text>
+  
+  <rect x="330" y="55" width="130" height="45" fill="#34495e" rx="6"/>
+  <text x="395" y="82" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">Custom Apps</text>
+  
+  <rect x="480" y="55" width="110" height="45" fill="#34495e" rx="6"/>
+  <text x="535" y="82" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">MCM</text>
+  
+  <rect x="610" y="55" width="110" height="45" fill="#34495e" rx="6"/>
+  <text x="665" y="82" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">CSM</text>
+  
+  <rect x="740" y="55" width="340" height="45" fill="#34495e" rx="6"/>
+  <text x="910" y="82" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">... etc (automation systems)</text>
+  
+  <!-- LAYER 3 Container -->
+  <rect x="300" y="180" width="550" height="180" fill="#f8f9fa" stroke="#1e8449" stroke-width="3" rx="8"/>
+  <text x="320" y="205" font-size="14" font-weight="bold" fill="#1e8449">⦿ LAYER 3: Enhanced Orchestrator</text>
+  
+  <rect x="350" y="225" width="450" height="115" fill="#27ae60" stroke="#1e8449" stroke-width="2" rx="10"/>
+  <text x="575" y="260" font-size="18" font-weight="bold" fill="#fff" text-anchor="middle">WeblabStrandsAgent</text>
+  <text x="575" y="290" font-size="14" fill="#fff" text-anchor="middle">Coordinates All Layers</text>
+  <text x="575" y="315" font-size="14" fill="#fff" text-anchor="middle">Multi-step Workflows</text>
+  
+  <!-- LAYER 2 Container (standardized padding: 20px all sides) -->
+  <rect x="50" y="420" width="1350" height="180" fill="#f8f9fa" stroke="#6c3483" stroke-width="3" rx="8"/>
+  <text x="70" y="445" font-size="14" font-weight="bold" fill="#6c3483">⦿ LAYER 2: Specialized Agents (ONE Task Each)</text>
+  
+  <rect x="70" y="460" width="150" height="120" fill="#8e44ad" stroke="#6c3483" stroke-width="2" rx="8"/>
+  <text x="145" y="490" font-size="13" font-weight="bold" fill="#fff" text-anchor="middle">WLBR.ai</text>
+  <text x="145" y="520" font-size="12" fill="#fff" text-anchor="middle">Experiment</text>
+  <text x="145" y="545" font-size="12" fill="#fff" text-anchor="middle">Text Analysis</text>
+  
+  <rect x="240" y="460" width="150" height="120" fill="#8e44ad" stroke="#6c3483" stroke-width="2" rx="8"/>
+  <text x="315" y="490" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">TAA-Root-Cause-1</text>
+  <text x="315" y="520" font-size="11" fill="#fff" text-anchor="middle">Weblab Not</text>
+  <text x="315" y="540" font-size="11" fill="#fff" text-anchor="middle">Published</text>
+  
+  <rect x="410" y="460" width="150" height="120" fill="#8e44ad" stroke="#6c3483" stroke-width="2" rx="8"/>
+  <text x="485" y="490" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">TAA-Root-Cause-2</text>
+  <text x="485" y="520" font-size="11" fill="#fff" text-anchor="middle">Insufficient</text>
+  <text x="485" y="540" font-size="11" fill="#fff" text-anchor="middle">Allocations</text>
+  
+  <rect x="580" y="460" width="150" height="120" fill="#8e44ad" stroke="#6c3483" stroke-width="2" rx="8"/>
+  <text x="655" y="490" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">TAA-Root-Cause-3</text>
+  <text x="655" y="520" font-size="11" fill="#fff" text-anchor="middle">Exposure</text>
+  <text x="655" y="540" font-size="11" fill="#fff" text-anchor="middle">Too Low</text>
+  
+  <rect x="750" y="460" width="150" height="120" fill="#8e44ad" stroke="#6c3483" stroke-width="2" rx="8"/>
+  <text x="825" y="500" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">... 5 more TAA</text>
+  <text x="825" y="530" font-size="11" fill="#fff" text-anchor="middle">Root Cause</text>
+  <text x="825" y="550" font-size="11" fill="#fff" text-anchor="middle">Agents</text>
+  
+  <rect x="920" y="460" width="150" height="120" fill="#8e44ad" stroke="#6c3483" stroke-width="2" rx="8"/>
+  <text x="995" y="500" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">Policy</text>
+  <text x="995" y="530" font-size="11" fill="#fff" text-anchor="middle">Compliance</text>
+  <text x="995" y="550" font-size="11" fill="#fff" text-anchor="middle">Checker</text>
+  
+  <rect x="1090" y="460" width="150" height="120" fill="#8e44ad" stroke="#6c3483" stroke-width="2" rx="8"/>
+  <text x="1165" y="490" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">Experiment</text>
+  <text x="1165" y="515" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">Health</text>
+  <text x="1165" y="545" font-size="11" fill="#fff" text-anchor="middle">Analyzer</text>
+  
+  <!-- LAYER 1A: Read Tools Container -->
+  <rect x="150" y="680" width="450" height="230" fill="#f8f9fa" stroke="#2980b9" stroke-width="3" rx="8"/>
+  <text x="170" y="705" font-size="14" font-weight="bold" fill="#2980b9">⦿ LAYER 1A: Read Tools</text>
+  
+  <rect x="180" y="730" width="140" height="45" fill="#5dade2" stroke="#2980b9" stroke-width="2" rx="6"/>
+  <text x="250" y="758" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">weblab_details</text>
+  
+  <rect x="340" y="730" width="170" height="45" fill="#5dade2" stroke="#2980b9" stroke-width="2" rx="6"/>
+  <text x="425" y="758" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">weblab_allocations</text>
+  
+  <rect x="180" y="795" width="200" height="45" fill="#5dade2" stroke="#2980b9" stroke-width="2" rx="6"/>
+  <text x="280" y="823" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">weblab_activation_history</text>
+  
+  <rect x="400" y="795" width="140" height="45" fill="#5dade2" stroke="#2980b9" stroke-width="2" rx="6"/>
+  <text x="470" y="823" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">query_wstlake</text>
+  
+  <!-- LAYER 1B: Write Tools Container -->
+  <rect x="700" y="680" width="500" height="230" fill="#f8f9fa" stroke="#c0392b" stroke-width="3" rx="8"/>
+  <text x="720" y="705" font-size="14" font-weight="bold" fill="#c0392b">⦿ LAYER 1B: Write Tools (Year 2+)</text>
+  
+  <rect x="750" y="745" width="170" height="45" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="6"/>
+  <text x="835" y="773" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">create_experiment</text>
+  
+  <rect x="950" y="745" width="170" height="45" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="6"/>
+  <text x="1035" y="773" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">modify_allocation</text>
+  
+  <rect x="840" y="815" width="170" height="45" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="6"/>
+  <text x="925" y="843" font-size="13" font-weight="500" fill="#fff" text-anchor="middle">dial_up_workflow</text>
+  
+  <!-- DATA SOURCES Container (moved further down for gentler arrow angles) -->
+  <rect x="400" y="1070" width="600" height="150" fill="#f8f9fa" stroke="#2c3e50" stroke-width="3" rx="8"/>
+  <text x="420" y="1095" font-size="14" font-weight="bold" fill="#2c3e50">⦿ DATA SOURCES</text>
+  
+  <rect x="450" y="1120" width="220" height="75" fill="#5d6d7e" stroke="#2c3e50" stroke-width="2" rx="8"/>
+  <text x="560" y="1150" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle">Weblab APIs</text>
+  <text x="560" y="1175" font-size="12" fill="#fff" text-anchor="middle">(WeblabAPIModel)</text>
+  
+  <rect x="730" y="1120" width="220" height="75" fill="#5d6d7e" stroke="#2c3e50" stroke-width="2" rx="8"/>
+  <text x="840" y="1150" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle">WSTLake Data</text>
+  <text x="840" y="1175" font-size="12" fill="#fff" text-anchor="middle">(Andes/Redshift)</text>
+  
+  <!-- Legend (Bottom aligned with DATA SOURCES bottom) -->
+  <rect x="1070" y="1000" width="330" height="220" fill="#fff" stroke="#95a5a6" stroke-width="2" rx="6"/>
+  <text x="1235" y="1025" font-size="14" font-weight="bold" fill="#000" text-anchor="middle">Connection Types</text>
+  
+  <line x1="1090" y1="1045" x2="1160" y2="1045" stroke="#27ae60" stroke-width="4" marker-end="url(#arrowGreen)"/>
+  <text x="1170" y="1050" font-size="12" fill="#000">Orchestrated Flow</text>
+  
+  <line x1="1090" y1="1070" x2="1160" y2="1070" stroke="#8e44ad" stroke-width="3.5" marker-end="url(#arrowPurple)"/>
+  <text x="1170" y="1075" font-size="12" fill="#000">Specialized Agent</text>
+  
+  <line x1="1090" y1="1095" x2="1160" y2="1095" stroke="#2980b9" stroke-width="3.5" marker-end="url(#arrowBlue)"/>
+  <text x="1170" y="1100" font-size="12" fill="#000">Tool Call (Read)</text>
+  
+  <line x1="1090" y1="1120" x2="1160" y2="1120" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowRed)"/>
+  <text x="1170" y="1125" font-size="12" fill="#000">Tool Call (Write)</text>
+  
+  <line x1="1090" y1="1145" x2="1160" y2="1145" stroke="#5d6d7e" stroke-width="3.5" marker-end="url(#arrowGray)"/>
+  <text x="1170" y="1150" font-size="12" fill="#000">Data Access</text>
+  
+  <text x="1235" y="1175" font-size="11" fill="#666" text-anchor="middle">Solid = Always</text>
+  <text x="1235" y="1195" font-size="11" fill="#666" text-anchor="middle">Dashed = Optional</text>
+  
+</svg>
+
+**Architecture Flexibility (Mesh Pattern):**
+
+- **Users (Q CLI, Cline, etc.) can call ANY layer:**
+  - Direct to Layer 1 tools (simple queries: "get experiment X details")
+  - Direct to Layer 2 agents (focused analysis: "analyze TAA root cause")
+  - Direct to Layer 3 orchestrator (complex workflows: "find all Dave's experiments with positive CP impact")
+
+- **Layer 3 (Orchestrator) dynamically chooses:**
+  - Can call Layer 2 agents for specialized analysis
+  - Can call Layer 1 tools directly when simple
+  - Decides based on query complexity
+
+- **Layer 2 (Specialized Agents) always call Layer 1:**
+  - WLBR.ai calls weblab_details + query_wstlake
+  - TAA agents call specific tools based on root cause
+
+- **Layer 1 (Tools) access Data Sources**
+
+> **Key Insight:** This is NOT a rigid hierarchy - it's a flexible mesh where callers choose the right entry point based on their needs.
+
+**Complete Ecosystem Characteristics:**
+
+**Layer 1 Expanded:**
+- Read tools (proven, production)
+- Write tools (create experiments, dial-up automation)
+- All deterministic, no LLM reasoning
+
+**Layer 2 Introduced:**
+- **WLBR.ai**: Experiment text analysis (existing service integrated)
+- **TAA Root Cause Agents (8 total)**: Each validates ONE specific root cause
+  - Example: TAA-Root-Cause-1 checks "Weblab not published"
+  - Example: TAA-Root-Cause-2 checks "Insufficient allocations"
+  - See: https://w.amazon.com/bin/view/Weblab/Troubleshooting/Treatment_Allocation_Alarms/
+- **Policy Compliance Checker**: Validates TAA/MCM requirements
+- **Experiment Health Analyzer**: Performance and health metrics
+- Each agent: Single focused task, calls layer 1 tools, returns focused analysis
+
+**Layer 3 Enhanced:**
+- Orchestrates both layer 1 (tools) AND layer 2 (specialized agents)
+- Natural language queries → multi-agent coordination
+- Example flow:
+  ```
+  User: "Why is my TAA alarm firing?"
+  
+  Orchestrator:
+  1. Calls weblab_details (layer 1)
+  2. Calls all 8 TAA root cause agents (layer 2)
+  3. Each agent validates one specific cause
+  4. Synthesizes: "Root cause: insufficient allocation"
+  ```
+
+---
+
+### Example: Layer 2 Agent Interaction
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Layer3 as Layer 3<br/>Orchestrator
+    participant Layer2 as Layer 2<br/>TAA-Root-Cause-2<br/>(Specialized Agent)
+    participant Layer1a as Layer 1<br/>weblab_details
+    participant Layer1b as Layer 1<br/>weblab_allocations
+    participant API as Weblab APIs
+
+    User->>Layer3: "Why is my TAA alarm firing for EXP-123?"
+    
+    Layer3->>Layer1a: Get experiment details
+    Layer1a->>API: GetExperiment(EXP-123)
+    API-->>Layer1a: Experiment data
+    Layer1a-->>Layer3: Details returned
+    
+    Layer3->>Layer2: Check "insufficient allocations" cause
+    
+    Layer2->>Layer1a: Get current state
+    Layer1a-->>Layer2: Experiment data
+    
+    Layer2->>Layer1b: Get allocation history
+    Layer1b->>API: ListAllocations(EXP-123)
+    API-->>Layer1b: Allocation data
+    Layer1b-->>Layer2: Allocations returned
+    
+    Note over Layer2: LLM reasons about data<br/>Checks if allocations < threshold
+    
+    Layer2-->>Layer3: "Confirmed: Sum of allocations = 45%<br/>Expected: ≥95% for TAA compliance"
+    
+    Layer3-->>User: "Root cause identified: Insufficient allocations (45%)<br/>TAA requires ≥95% allocation sum.<br/>Recommendation: Increase T1 allocation."
+```
+
+**Key Points:**
+- Layer 2 agent does ONE focused analysis
+- Calls multiple layer 1 tools as needed
+- Uses LLM to reason about retrieved data
+- Returns focused, actionable insight
+- Orchestrator synthesizes multiple layer 2 results
+
+---
+
+### Benefits of 3-Layer Architecture
+
+**Modularity:**
+- Each layer has clear responsibility
+- Easy to add new layer 2 specialized agents
+- Layer 1 tools reusable across all agents
+
+**Scalability:**
+- Layer 2 agents can run independently
+- Orchestrator coordinates based on query
+- No monolithic "do everything" agent
+
+**Positioning WLBR.ai:**
+- Not competing - fitting into ecosystem
+- One of many layer 2 specialized agents
+- Opens door for more focused agents
+
+**Evolution Path:**
+- Phase 2: Foundation (layers 1 + 3)
+- Year 2: Add specialized agents (layer 2)
+- Year 3: Full multi-agent collaboration
+
+---
+
 ## Three Year Technical Roadmap
 
 ### Year 1 (2026): Remote Foundation
@@ -415,7 +928,7 @@ result = andes_tools.call('DataCentralWorkbench', {
 - State management for dial-up workflows
 - Event-driven triggers (SNS, EventBridge)
 - Workflow orchestration (Strands workflow tools)
-- Advanced auth (policy exceptions, lock mechanisms)
+- Additional auth (policy exceptions, lock mechanisms)
 
 **Architecture evolution:**
 ```python
@@ -446,7 +959,7 @@ orchestrator = Agent(
 
 **Technical enablers:**
 - Agent-to-Agent (A2A) protocol (Strands roadmap)
-- Advanced reasoning models (GPT-5? Claude 4?)
+- Additional reasoning models (GPT-5? Claude 4?)
 - Improved tool retrieval (6000+ tools case from AWS blog)
 - WSTLake 2.0 dimensional modeling
 
@@ -469,7 +982,7 @@ orchestrator = Agent(
 **Breaking News (Doug, Oct 7):**
 > "CloudAuth Python MCP SDK dropped this week: https://w.amazon.com/bin/view/Dev.CDO/UnifiedAuth/CloudAuth/Onboarding/MCP/Python
 > 
-> This gives us a way to authenticate agents, for example running lambdas on backend like WLBR.ai, securely via direct MCP to call tools. Seamless integration with Strands."
+> This gives us a way to authenticate agents, for example running lambdas on backend like WLBR.ai, securely via direct MCP to call tools. Integrated integration with Strands."
 
 **What This Gives Us:**
 - CloudAuthFastMCP for Python MCP servers
@@ -769,7 +1282,7 @@ def weblab_details(
     experiment_id: str,
     environment: str = "BETA"
 ) -> dict:
-    """Get comprehensive weblab experiment details
+    """Get complete weblab experiment details
     
     Args:
         experiment_id: The weblab ID (e.g., 'WEBLAB_123')
@@ -891,7 +1404,7 @@ StrandsTelemetry() \
 ### Strands Agent SDK
 - **Why:** Native MCP support, production patterns, AWS adoption
 - **Alternative:** LangChain (less stable per Reddit feedback)
-- **Decision:** Strands more enterprise-ready
+- **Decision:** Strands better for production
 
 ### Python Runtime
 - **Why:** Strands SDK, Doug's patterns, rich AI ecosystem
@@ -1035,6 +1548,6 @@ StrandsTelemetry() \
 
 ---
 
-**Document Status:** DRAFT - Technical brainstorm  
-**Next Review:** Week of October 7  
-**For:** Input to Weblab 3YAP technical vision
+**Document Status:** Active  
+**Deadline:** October 20, 2025  
+**For:** Input to Weblab 3YAP technical vision (Sergio's primitive)

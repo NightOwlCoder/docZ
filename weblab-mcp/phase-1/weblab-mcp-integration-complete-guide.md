@@ -12,11 +12,11 @@ This document consolidates all research, technical guidance, and implementation 
 - 5 weblab MCP tools in AmazonInternalMCPServer package
 - Public Weblab API integration (NOT internal UI endpoints)
 - Hybrid authentication (individual + shared community keys)
-- Optional Strands agent integration for advanced workflows
+- Optional Strands agent integration for additional workflows
 
 ## Critical Technical Requirements (Keith Norman's Guidance)
 
-### 🚨 **MUST USE PUBLIC API**
+###  **MUST USE PUBLIC API**
 - **Previous Failure**: CR-196833998 was reverted for using internal UI endpoints
 - **Keith's Requirement**: Use public weblab API with proper service protection
 - **Forbidden**: Internal "backdoor" endpoints (weblab.amazon.com/api, /v2/api, /s/_xhr/page)
@@ -28,7 +28,7 @@ This document consolidates all research, technical guidance, and implementation 
 3. **API Client Libraries**: 
    - HarmonyWeblabClient-JS (actual client used by Content Symphony)
    - WeblabAPITypescriptClient (types only)
-4. **Authentication**: Midway recommended, comprehensive docs at Weblab API wiki
+4. **Authentication**: Midway recommended, complete docs at Weblab API wiki
 5. **API Keys**: Add entries to WeblabAPI/src/api-consumers.ts
 
 ## AmazonInternalMCPServer Contribution Process
@@ -116,7 +116,7 @@ private async getWeblabApiKey(): Promise<string> {
 - **Workaround**: Basic filtering on list endpoint initially
 
 ### 2. weblab_details
-- **Purpose**: Get comprehensive experiment information
+- **Purpose**: Get complete experiment information
 - **API**: GetExperiment operation from WeblabAPIModel
 - **Output**: Title, objective, treatments, CTI, ownership
 
@@ -135,7 +135,7 @@ private async getWeblabApiKey(): Promise<string> {
 - **API**: WeblabAPIExternalModel allocation-operation (Keith's solution)
 - **Output**: Treatment assignment (C, T1, T2, etc.)
 
-## MCP Prompts Integration (Advanced Feature)
+## MCP Prompts Integration (Additional Feature)
 
 ### Overview
 Based on [CR-212609177](https://code.amazon.com/reviews/CR-212609177/revisions/2#/details), Amazon has implemented **MCP Prompts** - structured prompts with parameters that can orchestrate multiple tools for complex workflows.
@@ -148,7 +148,7 @@ Following the pattern from `fix-integration-test` prompt, we could implement web
 // Example prompt structure
 export const WeblabExperimentAnalysisPrompt: Prompt = {
   name: "weblab-experiment-analysis",
-  description: "Comprehensive weblab experiment analysis and recommendations",
+  description: "Complete weblab experiment analysis and recommendations",
   arguments: [
     {
       name: "experimentId",
@@ -173,7 +173,7 @@ export const WeblabExperimentAnalysisPrompt: Prompt = {
 - **Output**: Root cause analysis and fix recommendations
 
 #### 3. weblab_experiment_health_check
-- **Purpose**: Comprehensive health check for experiments
+- **Purpose**: Complete health check for experiments
 - **Tools Used**: All 5 weblab tools + external validation
 - **Output**: Health report with actionable insights
 
@@ -298,6 +298,6 @@ agent("What is the current allocation for weblab XYZ?")
 - SME validation from weblab domain expert
 - Dual approval from mcp-community and genai-devx-appdev teams
 - Complete documentation and usage examples
-- Comprehensive test coverage
+- Complete test coverage
 
 This guide consolidates all research findings and provides a complete roadmap for implementing weblab MCP integration following Amazon's established patterns and Keith's technical guidance.

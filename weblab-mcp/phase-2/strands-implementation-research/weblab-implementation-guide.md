@@ -337,7 +337,7 @@ export const WeblabDetailsTool: Tool = {
   description: [
     "Get detailed information about a weblab experiment",
     "",
-    "This tool retrieves comprehensive information about a specific weblab experiment",
+    "This tool retrieves complete information about a specific weblab experiment",
     "including treatments, CTI information, ownership, and configuration details.",
     "",
     "Parameters:",
@@ -720,7 +720,7 @@ Update `README.md` to include weblab tools:
 ```markdown
 ### Weblab Tools (Experiment Management)
 - weblab_search: Search for weblab experiments by creator, status, or resolver group
-- weblab_details: Get comprehensive experiment information including treatments and CTI
+- weblab_details: Get complete experiment information including treatments and CTI
 - weblab_allocations: Check current experiment status and treatment allocations
 - weblab_activation_history: Access experiment activation history with MCM information
 - weblab_treatment_assignment: Get treatment assignments for specific visitors

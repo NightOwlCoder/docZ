@@ -41,7 +41,7 @@ I found several excellent SAFE test tables that meet all your criteria:
 
 ### **Top Recommendations (Auto-Approval + No Current Access):**
 
-1. encompass-test.fdp-test ✅
+1. encompass-test.fdp-test 
    • Provider: encompass-test
    • Dataset: fdp-test (version 1)
    • Description: "test fdp"
@@ -49,7 +49,7 @@ I found several excellent SAFE test tables that meet all your criteria:
    • **Policy: Dataset Owner Approval ONLY** (auto-approval)
    • **Status: You have NO current access**
 
-2. GOLDKING-TEST-ED-CAIRNS.goldking-test-sample-test ✅
+2. GOLDKING-TEST-ED-CAIRNS.goldking-test-sample-test 
    • Provider: GOLDKING-TEST-ED-CAIRNS
    • Dataset: goldking-test-sample-test (version 2)
    • Description: "Sample Data"
@@ -57,7 +57,7 @@ I found several excellent SAFE test tables that meet all your criteria:
    • **Policy: Dataset Owner Approval ONLY** (auto-approval)
    • **Status: You have NO current access**
 
-3. Sample-Test-Provider.Sample-test ✅
+3. Sample-Test-Provider.Sample-test 
    • Provider: Sample-Test-Provider
    • Dataset: Sample-test (version 2)
    • Description: "Sample-test to test permissions required to update completeness"
